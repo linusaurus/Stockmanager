@@ -1,0 +1,217 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "MosaicContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "Entities",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[Asset]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Attachment]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[BOM]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[BOMListItem]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Claim]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ClaimDocument]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ClaimItem]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Delivery]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[DeliveryReceipt]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Destination]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Document]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[DocumentParts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Employee]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Globals]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Inventory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Job]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[JobSite]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Location]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Manu]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NFRC]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[OpCode]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[OrderFee]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[OrderReceiptItems]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[OrderReciept]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[OrderState]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Part]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PartCategory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PartTypes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PickList]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PickListItem]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Product]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PurchaseLineItem]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PurchaseOrder]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Resource]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ResourceVersion]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ShipBy]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SubAssembly]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Supplier]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Task]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TransActionType]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Unit]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UnitOfMeasure]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorkCenter]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorkOrder]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[WorkOrderRouting]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "DBSERVER.Mosaic",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false,
+   "UseT4": false
+}
