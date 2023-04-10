@@ -25,6 +25,8 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
     <PackageReference Include="MotorolaCoreScannerNet" Version="1.1.5" />
     <PackageReference Include="MotorolaCoreScannerNetStandard" Version="1.1.5" />
+    <PackageReference Include="Neodynamic.SDK.ThermalLabel" Version="11.0.22.1021" />
+    <PackageReference Include="Neodynamic.SDK.ThermalLabel.WindowsPrinting.NetCore" Version="11.0.22.1021" />
   </ItemGroup>
 
   <ItemGroup>
