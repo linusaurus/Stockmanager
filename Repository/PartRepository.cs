@@ -26,18 +26,20 @@ namespace Repository
         {
             IQueryable<Part>  searchParts = new List<Part>().AsQueryable();
 
-            if (searchTerm[1].Length > 0 || !string.IsNullOrEmpty(searchTerm[1].ToString()))
-            {
-               searchParts = FindByCondition(c => c.ItemDescription.Contains(searchTerm[1].ToString()),false);
-            }
-            if (searchTerm[2].Length > 0 || !string.IsNullOrEmpty(searchTerm[2].ToString()))
-            {
-                searchParts = FindByCondition(c => c.ItemDescription.Contains(searchTerm[2].ToString()), false);
-            }
-            if (searchTerm[3].Length > 0 || !string.IsNullOrEmpty(searchTerm[3].ToString()))
-            {
-                searchParts = FindByCondition(c => c.ItemDescription.Contains(searchTerm[3].ToString()), false);
-            }
+            var isSearchOneNullOrEmpty = string.IsNullOrEmpty(searchTerm[0]);
+            var isSearchTwoNullOrEmpty = string.IsNullOrEmpty(searchTerm[1]);
+            var isSearchThreeNullOrEmpty = string.IsNullOrEmpty(searchTerm[2]);
+
+            searchParts = base.RepositoryContext.Part.Where(a =>
+            (isSearchOneNullOrEmpty || a.ItemDescription.Contains(searchTerm[0])
+            ) &&
+            (isSearchTwoNullOrEmpty || a.ItemDescription.Contains(searchTerm[1])
+            ) &&
+            (isSearchThreeNullOrEmpty || a.ItemDescription.Contains(searchTerm[2]))
+            );
+
+            
+    
             return searchParts.ToList();
         }
 
