@@ -12,6 +12,8 @@ namespace Contracts
         IEnumerable<Part> GetAllParts(bool trackChanges);
         IEnumerable<Part> Search(string[] searchTerm, bool trackChanges);
         Part GetPartById(int id, bool trackChanges);
+
+        Part GetPartBySKU(string sku,bool trackChanges);
         void UpdatePart(Part part);
 
     }

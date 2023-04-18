@@ -86,7 +86,14 @@ namespace StockManager.UXControls
         {
             if (_selectedPart != null)
             {
-
+               
+                PartLabelDto partLabelDto = new PartLabelDto
+                { PartID=_selectedPart.PartID,
+                  ItemDescription=_selectedPart.ItemDescription,
+                  Location = _selectedPart.Location,
+                  SKU = _selectedPart.SKU
+                };
+                LabelFactory.PrintPartLabel(partLabelDto);
             }
         }
 

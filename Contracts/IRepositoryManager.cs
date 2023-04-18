@@ -10,7 +10,7 @@ namespace Contracts
     {
         IPartRepository PartRepository { get; }
         IInventoryRepository InventoryRepository { get; }
-
+        IJobsRepository JobsRepository { get; }
         void Save();
     }
 }

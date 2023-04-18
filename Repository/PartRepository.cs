@@ -43,7 +43,7 @@ namespace Repository
             return searchParts.ToList();
         }
 
-        public Part GetPartById(int id, bool trackChanges) =>
+        public Part? GetPartById(int id, bool trackChanges) =>
             FindByCondition(e => e.PartID == id, false).SingleOrDefault();
 
         public void UpdatePart(Part part)
@@ -51,5 +51,9 @@ namespace Repository
             Update(part);
             
         }
+
+        public Part GetPartBySKU(string sku, bool trackChanges) =>
+            FindByCondition(e => e.SKU.Contains( sku), false).FirstOrDefault();
+
     }
 }
