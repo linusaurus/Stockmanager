@@ -20,6 +20,8 @@ namespace StockManager.UXControls
         List<Part> _selectedParts = new List<Part>();
         Part _selectedPart;
 
+        public Part SelectedPart { get => _selectedPart; set => _selectedPart = value; }
+
         public PartManagerControl(IRepositoryManager repositoryManager)
         {
             InitializeComponent();
@@ -31,6 +33,17 @@ namespace StockManager.UXControls
 
         private void DataGridView1_SelectionChanged(object? sender, EventArgs e)
         {
+            DataGridView dv = (DataGridView)sender;
+            if (dv.DataSource != null)
+            {
+                if (dv.SelectedRows.Count > 0)
+                {
+
+                    BindingManagerBase bm = BindingContext[dv.DataSource, dv.DataMember];
+                    _selectedPart = (Part)bm.Current;
+                    txtSelectedPart.Text = _selectedPart.ItemDescription.ToString();
+                }
+            }
 
         }
 
@@ -38,12 +51,7 @@ namespace StockManager.UXControls
         {
             if ((keyData == Keys.Enter) || (keyData == Keys.Return))
             {
-
-
-
                 SearchParts();
-
-
                 return true;
             }
             else if (keyData == Keys.Escape) //clear the textboxes, null the dg source
@@ -84,14 +92,15 @@ namespace StockManager.UXControls
 
         private void btnPrintLabels_Click(object sender, EventArgs e)
         {
-            if (_selectedPart != null)
+            if (SelectedPart != null)
             {
-               
+
                 PartLabelDto partLabelDto = new PartLabelDto
-                { PartID=_selectedPart.PartID,
-                  ItemDescription=_selectedPart.ItemDescription,
-                  Location = _selectedPart.Location,
-                  SKU = _selectedPart.SKU
+                {
+                    PartID = SelectedPart.PartID,
+                    ItemDescription = SelectedPart.ItemDescription,
+                    Location = SelectedPart.Location,
+                    SKU = SelectedPart.SKU
                 };
                 LabelFactory.PrintPartLabel(partLabelDto);
             }
@@ -106,13 +115,13 @@ namespace StockManager.UXControls
                 {
                     if (dv.SelectedRows.Count > 0)
                     {
-                       BindingManagerBase? bm = dv.BindingContext?[dataGridView1.DataSource, dataGridView1.DataMember];
-                       _selectedPart = (Part)bm.Current;
+                        BindingManagerBase? bm = dv.BindingContext?[dataGridView1.DataSource, dataGridView1.DataMember];
+                        SelectedPart = (Part)bm.Current;
                     }
-                    
+
                 }
             }
-           
+
         }
     }
 }

@@ -18,11 +18,14 @@ namespace StockManager
         private IList<StockItem> _scannedItems = new List<StockItem>();
         private Dictionary<int, Inventory> PulledItemsList = new Dictionary<int, Inventory>();
         private BindingSource bsItems = new BindingSource();
-        private bool _listIsActive = false;
+        private bool _listIsActive;
         private Job _selectedJob;
+        private StockItem _selectedStockItem;
 
 
         private readonly IRepositoryManager _repositoryManager;
+
+
         public MainForm(IRepositoryManager repositoryManager)
         {
             InitializeComponent();
@@ -58,9 +61,57 @@ namespace StockManager
             dvgStockList.DataSource = bsItems;
             //--Event Wiring
             bsItems.ListChanged += BsItems_ListChanged;
+            dvgStockList.SelectionChanged += DvgStockList_SelectionChanged;
             //--Event Wiring
+        }
+
+        private void DvgStockList_SelectionChanged(object? sender, EventArgs e)
+        {
+            DataGridView dvg = (DataGridView)sender;
+
+            if (dvg.DataSource != null)
+            {
+                if (dvg.SelectedRows.Count > 0)
+                {
+                    BindingManagerBase bm = BindingContext[dvg.DataSource, dvg.DataMember];
+                    _selectedStockItem = (StockItem)bm.Current;
+                }
+            }
+        }
+
+        public bool ListIsActive
+        {
+            get => _listIsActive;
+            set
+            {
+                if (_listIsActive != value)
+                {
+                    if (value == true)
+                    {
+                        tsbNewStockList.Enabled = !value;
+                        tsbProccessList.Enabled = value;
+                        dvgStockList.Visible = value;
+                        tsbProccessList.BackColor = System.Drawing.Color.OldLace;
+                        _listIsActive = value;
+
+                    }
+                    else if (value == false)
+                    {
+                        tsbNewStockList.Enabled = true;
+                        tsbProccessList.Enabled = false;
+                        bsItems.Clear();
+                        dvgStockList.Visible = value;
+                        tsbProccessList.BackColor = System.Drawing.Color.White;
+                        _listIsActive = value;
+                    }
+
+                }
+
+
+            }
 
         }
+
 
         private bool ProcessItem()
         {
@@ -78,17 +129,17 @@ namespace StockManager
                     Description = item.Description,
                     EmpID = 8,
                     JobID = _selectedJob.jobID,
-                    InventoryAmount = item.InventoryAmount,
+                    InventoryAmount = item.InventoryAmount * -1.0m,
                     Location = part.Location,
-                    TransActionType = 2,
+                    TransActionType = 3,
                     UnitOfMeasureID = part.UnitOfMeasureID.GetValueOrDefault()
-
                 };
 
                 _repositoryManager.InventoryRepository.Update(inventory);
 
             }
             _repositoryManager.Save();
+            ListIsActive = false;
             return result;
 
         }
@@ -101,6 +152,7 @@ namespace StockManager
 
                 tsbProccessList.Enabled = true;
                 tsbProccessList.BackColor = System.Drawing.Color.Tan;
+                tslStatusLabel.Text = $"Items = {bsItems.List.Count.ToString()}";
 
             }
         }
@@ -119,17 +171,17 @@ namespace StockManager
 
             }
             // any other type of code assume its a SKU
-           // else if (e.BarcodeType == BarcodeType.UPCA || e.BarcodeType == BarcodeType.EAN13 || e.BarcodeType == BarcodeType.Code128)
-            else 
+            // else if (e.BarcodeType == BarcodeType.UPCA || e.BarcodeType == BarcodeType.EAN13 || e.BarcodeType == BarcodeType.Code128)
+            // any kind of symbiology other than CODE 39
+            else
             {
-                // Invoke(new Action(() => LookupPartSKU(_lastScanned)));
                 Invoke(new Action(() => LookupPartSKU(e.Data.ToString())));
             }
 
         }
 
 
-
+        #region Scanner Methods
         private void LookupPartScanned(string partID)
         {
             int testValue;
@@ -148,6 +200,7 @@ namespace StockManager
                     {
                         StockItem lineItem = new StockItem();
                         lineItem.PartID = foundPart.PartID;
+                        lineItem.SKU = foundPart.SKU;
                         lineItem.Description = foundPart.ItemDescription;
                         lineItem.Location = foundPart.Location;
                         lineItem.InventoryAmount = 1.0m;
@@ -160,7 +213,6 @@ namespace StockManager
                 }
             }
 
-
         }
 
         private void LookupPartSKU(string partScanSKU)
@@ -170,21 +222,19 @@ namespace StockManager
             {
                 StockItem lineItem = new StockItem();
                 lineItem.PartID = foundPart.PartID;
+                lineItem.SKU = foundPart.SKU.ToString();
                 lineItem.Description = foundPart.ItemDescription;
                 lineItem.Location = foundPart.Location;
                 lineItem.InventoryAmount = 1.0m;
                 lineItem.DateStamp = DateTime.Now;
                 bsItems.Add(lineItem);
             }
-    
-               dvgStockList.Refresh();
-         
-        }
 
-        private void ActiveListMode(bool active)
-        {
+            dvgStockList.Refresh();
 
         }
+
+        #endregion
 
         private void tsMainToolBar_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
@@ -194,18 +244,15 @@ namespace StockManager
                 switch (e.ClickedItem.Name)
                 {
                     case "tsbNewStockList":
-                        dvgStockList.Visible = true;
-                        tsbNewStockList.Enabled = false;
-                        tsbProccessList.Enabled = false;
-                        _listIsActive = true;
+
+                        ListIsActive = true;
+
                         break;
                     case "tsbProccessList":
-                        dvgStockList.Visible = false;
-                        tsbProccessList.Enabled = false;
+
                         if (ProcessItem())
                         {
-                            tsbNewStockList.Enabled = true;
-                            tsbProccessList.Enabled = false;
+                            ListIsActive = false;
                         }
                         break;
                     default: break;
@@ -243,9 +290,6 @@ namespace StockManager
 
                     txtCodeType.Visible = false;
                     txtLastScannedResult.Visible = false;
-                    tsbNewStockList.Enabled = false;
-                    tsbProccessList.Enabled = false;
-
                     break;
                 case "tbStockList":
                     txtLastScannedResult.Visible = true;

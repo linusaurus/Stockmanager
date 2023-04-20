@@ -1036,11 +1036,11 @@ namespace StockManager
 
             #endregion
 
-            //// StockTransAction Column --
-            //DataGridViewTextBoxColumn col_StockTransActionID = new DataGridViewTextBoxColumn();
-            //col_StockTransActionID.HeaderText = "Stock#";
-            //col_StockTransActionID.DataPropertyName = "StockTransActionID";
-            //col_StockTransActionID.Width = 60;
+            // SKU Column --
+            DataGridViewTextBoxColumn col_SKU= new DataGridViewTextBoxColumn();
+            col_SKU.HeaderText = "SKU#";
+            col_SKU.DataPropertyName = "SKU";
+            col_SKU.Width = 120;
 
             // PartID Column --
             DataGridViewTextBoxColumn col_PickListItemID = new DataGridViewTextBoxColumn();
@@ -1073,7 +1073,7 @@ namespace StockManager
             col_DateStamp.DataPropertyName = "DateStamp";
             col_DateStamp.Width = 120;
 
-            dg.Columns.AddRange(col_PickListItemID,  col_Qnty, col_Description, col_Location, col_DateStamp);
+            dg.Columns.AddRange(col_PickListItemID, col_SKU, col_Qnty, col_Description, col_Location, col_DateStamp);
 
         }
 
@@ -1153,7 +1153,7 @@ namespace StockManager
             return tbl;
         }
 
-        internal static void BuildStockPartsGrid(DataGridView dg)
+        public static void BuildStockPartsGrid(DataGridView dg)
         {
             dg.AutoGenerateColumns = false;
 

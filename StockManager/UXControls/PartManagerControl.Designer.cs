@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             spcPartManager = new SplitContainer();
+            txtSelectedPart = new TextBox();
             btnPrintLabels = new Button();
             txtSearch3 = new TextBox();
             txtSearch2 = new TextBox();
@@ -50,6 +51,7 @@
             // 
             // spcPartManager.Panel1
             // 
+            spcPartManager.Panel1.Controls.Add(txtSelectedPart);
             spcPartManager.Panel1.Controls.Add(btnPrintLabels);
             spcPartManager.Panel1.Controls.Add(txtSearch3);
             spcPartManager.Panel1.Controls.Add(txtSearch2);
@@ -64,11 +66,18 @@
             spcPartManager.SplitterDistance = 120;
             spcPartManager.TabIndex = 0;
             // 
+            // txtSelectedPart
+            // 
+            txtSelectedPart.Location = new Point(13, 56);
+            txtSelectedPart.Name = "txtSelectedPart";
+            txtSelectedPart.Size = new Size(320, 23);
+            txtSelectedPart.TabIndex = 5;
+            // 
             // btnPrintLabels
             // 
-            btnPrintLabels.Location = new Point(443, 20);
+            btnPrintLabels.Location = new Point(801, 20);
             btnPrintLabels.Name = "btnPrintLabels";
-            btnPrintLabels.Size = new Size(136, 23);
+            btnPrintLabels.Size = new Size(136, 30);
             btnPrintLabels.TabIndex = 4;
             btnPrintLabels.Text = "Print Label(s)";
             btnPrintLabels.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -134,5 +143,6 @@
         private TextBox txtSearch2;
         private TextBox txtSearch1;
         private Button btnPrintLabels;
+        private TextBox txtSelectedPart;
     }
 }

@@ -22,6 +22,8 @@ namespace StockManager
         {
             string PrinterName = StockManager.Properties.Settings.Default.PrinterName;
             PrinterSettings? PrinterXmlData;
+
+            var filePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var fileName = Path.Combine(Environment.GetFolderPath(
                             Environment.SpecialFolder.ApplicationData), PrinterName);
             if(String.IsNullOrEmpty(PrinterName))
@@ -35,9 +37,13 @@ namespace StockManager
                 PrintJobDialog frmPrintJob = new PrintJobDialog();
                 if (frmPrintJob.ShowDialog() == DialogResult.OK)
                 {
-                    ;
                     XmlSerializer serializer = new XmlSerializer(typeof(PrinterSettings));
-                    using (TextWriter writer = new StreamWriter(frmPrintJob.PrinterSettings.PrinterName))
+                    PrinterName = frmPrintJob.PrinterSettings.PrinterName;
+                    StockManager.Properties.Settings.Default.PrinterName = PrinterName;
+                    StockManager.Properties.Settings.Default.Save();
+
+                    fileName = Path.Combine(filePath, PrinterName);
+                    using (TextWriter writer = new StreamWriter(fileName))
                     {
                         serializer.Serialize(writer, frmPrintJob.PrinterSettings);
                     }
@@ -46,7 +52,7 @@ namespace StockManager
 
             //Pull the settings from XML file --
             XmlSerializer deserializer = new XmlSerializer(typeof(PrinterSettings));
-            TextReader reader = new StreamReader(Path.Combine(fileName,PrinterName));
+            TextReader reader = new StreamReader(Path.Combine(fileName));
             object obj = deserializer.Deserialize(reader);
             PrinterXmlData = (PrinterSettings)obj;
             reader.Close();

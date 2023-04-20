@@ -10,6 +10,7 @@ namespace StockManager
     public class StockItem : IEquatable<StockItem>
     {
         public int PartID { get; set; }
+        public string SKU { get; set; }
         public string? Description { get; set; }
         public decimal InventoryAmount { get; set; }
         public string? Location { get; set; }
