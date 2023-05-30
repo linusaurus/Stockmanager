@@ -3,15 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManager", "StockManager\StockManager.csproj", "{D55F96FD-D8B8-4A97-B931-AA85DF5FD56E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockManager", "StockManager\StockManager.csproj", "{D55F96FD-D8B8-4A97-B931-AA85DF5FD56E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{31E4E63F-E2E5-4B39-9B8F-7232C988167D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{31E4E63F-E2E5-4B39-9B8F-7232C988167D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{45650AFA-0E29-46D5-81BE-5C8B8C2E7011}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{45650AFA-0E29-46D5-81BE-5C8B8C2E7011}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{B21491EF-E162-4134-93D8-8F098C08A7E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "Contracts\Contracts.csproj", "{B21491EF-E162-4134-93D8-8F098C08A7E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{B6757C88-4319-4746-82DA-E7087CB39F18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{B6757C88-4319-4746-82DA-E7087CB39F18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Contracts", "Service.Contracts\Service.Contracts.csproj", "{78A7B974-AAC3-454A-8A80-A3831CDCE9C3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{31E4E63F-E2E5-4B39-9B8F-7232C988167D} = {31E4E63F-E2E5-4B39-9B8F-7232C988167D}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +44,10 @@ Global
 		{B6757C88-4319-4746-82DA-E7087CB39F18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6757C88-4319-4746-82DA-E7087CB39F18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6757C88-4319-4746-82DA-E7087CB39F18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78A7B974-AAC3-454A-8A80-A3831CDCE9C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78A7B974-AAC3-454A-8A80-A3831CDCE9C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78A7B974-AAC3-454A-8A80-A3831CDCE9C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78A7B974-AAC3-454A-8A80-A3831CDCE9C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

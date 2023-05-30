@@ -37,13 +37,13 @@ namespace StockManager
         private static void ConfigureServices(ServiceCollection services)
         {
             ServiceExtensions.ConfigureRepositoryManager(services);
-            //ServiceExtensions.ConfigureServiceManager(services);
+            ServiceExtensions.ConfigureServiceManager(services);
             ServiceExtensions.ConfigureSqlContext(services);
-            //ServiceExtensions.ConfigureLoggerService(services);
+            ServiceExtensions.ConfigureMediatorServices(services);
 
 
             //services.AddTransient<IPartRepository, PartRepository>();
-
+            
             services.AddScoped<MainForm>();
 
         }

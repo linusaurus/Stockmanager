@@ -11,6 +11,9 @@ namespace Contracts
         IPartRepository PartRepository { get; }
         IInventoryRepository InventoryRepository { get; }
         IJobsRepository JobsRepository { get; }
+        ILocationRepository LocationRepository { get; }
+
+        IUnitOfMeasureRepository UnitOfMeasureRepository { get; }
         void Save();
     }
 }

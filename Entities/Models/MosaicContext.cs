@@ -1024,34 +1024,7 @@ namespace Entities.Models
                     .HasDefaultValueSql("(' ')");
             });
 
-            modelBuilder.Entity<Task>(entity =>
-            {
-                entity.HasKey(e => e.TaskCode);
-
-                entity.Property(e => e.TaskCode).ValueGeneratedNever();
-
-                entity.Property(e => e.ActualTime).HasColumnType("decimal(18, 2)");
-
-                entity.Property(e => e.CostCalculation)
-                    .HasMaxLength(60)
-                    .IsFixedLength();
-
-                entity.Property(e => e.EstimatedTime).HasColumnType("decimal(18, 2)");
-
-                entity.Property(e => e.MarkUp).HasColumnType("decimal(18, 2)");
-
-                entity.Property(e => e.Rate).HasColumnType("decimal(18, 2)");
-
-                entity.Property(e => e.TaskDescription)
-                    .HasMaxLength(240)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TaskName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Total).HasColumnType("decimal(18, 4)");
-            });
+          
 
             modelBuilder.Entity<TransActionType>(entity =>
             {

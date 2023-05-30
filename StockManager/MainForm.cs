@@ -1,5 +1,8 @@
 using Contracts;
 using Entities.Models;
+using Service;
+using Service.Contracts;
+using MediatR;
 using Motorola.Snapi;
 using Motorola.Snapi.Constants.Enums;
 using Motorola.Snapi.EventArguments;
@@ -14,22 +17,32 @@ namespace StockManager
     {
 
         private string _lastScanned;
-
+        private readonly IMediator _mediator;
+        private readonly IServiceManager _serviceManager;
         private IList<StockItem> _scannedItems = new List<StockItem>();
         private Dictionary<int, Inventory> PulledItemsList = new Dictionary<int, Inventory>();
         private BindingSource bsItems = new BindingSource();
         private bool _listIsActive;
         private Job _selectedJob;
         private StockItem _selectedStockItem;
+        public class Ping : IRequest<string> { }
 
+        public class PingHandler : IRequestHandler<Ping, string>
+        {
+            public Task<string> Handle(Ping request, CancellationToken cancellationToken)
+            {
+                return System.Threading.Tasks.Task.FromResult("Pong");
+            }
+        }
 
         private readonly IRepositoryManager _repositoryManager;
 
 
-        public MainForm(IRepositoryManager repositoryManager)
+        public MainForm(IRepositoryManager repositoryManager,IServiceManager serviceManager ,IMediator mediator)
         {
             InitializeComponent();
-
+            _mediator = mediator;
+            _serviceManager = serviceManager;
             ThermalLabel.LicenseOwner = "Richard Young-Ultimate Edition-Developer License";
             ThermalLabel.LicenseKey = "RALJ9V89HNTFJMHZWRMH6MFP82AXAXDTX3ZXUESKXRFLXAZ346GQ";
 
@@ -50,9 +63,11 @@ namespace StockManager
             { };
 
             BarcodeScannerManager.Instance.DataReceived += OnDataReceived;
-            PartManagerControl ctr = new PartManagerControl(repositoryManager);
+
+            PartManagerControl ctr = new PartManagerControl( repositoryManager,_serviceManager, mediator);
             ctr.Dock = DockStyle.Fill;
             tbPartManager.Controls.Add(ctr);
+           
 
             LoadJobs();
 
@@ -62,7 +77,13 @@ namespace StockManager
             //--Event Wiring
             bsItems.ListChanged += BsItems_ListChanged;
             dvgStockList.SelectionChanged += DvgStockList_SelectionChanged;
+ 
             //--Event Wiring
+        }
+
+        private void Ctr_SelectedChanged(object? sender, EventArgs e)
+        {
+          
         }
 
         private void DvgStockList_SelectionChanged(object? sender, EventArgs e)
@@ -93,7 +114,6 @@ namespace StockManager
                         dvgStockList.Visible = value;
                         tsbProccessList.BackColor = System.Drawing.Color.OldLace;
                         _listIsActive = value;
-
                     }
                     else if (value == false)
                     {
@@ -159,7 +179,7 @@ namespace StockManager
 
         private void OnDataReceived(object? sender, BarcodeScanEventArgs e)
         {
-
+            _mediator.Send(new Ping());
             _lastScanned = Regex.Replace(e.Data, "[^0-9]", "");
             Invoke(new Action(() => DisplayBarcodeType(e.BarcodeType.ToString())));
             Invoke(new Action(() => DisplayBarcodeValue(e.Data)));

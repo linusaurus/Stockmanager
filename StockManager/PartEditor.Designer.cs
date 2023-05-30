@@ -56,11 +56,13 @@
             txtPartName = new TextBox();
             txtPartID = new TextBox();
             tabStockTransactions = new TabPage();
-            dgvScannedItems = new DataGridView();
+            dgvPartTransactions = new DataGridView();
+            button1 = new Button();
+            button2 = new Button();
             tabPartEditor.SuspendLayout();
             tabPartDetail.SuspendLayout();
             tabStockTransactions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvScannedItems).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvPartTransactions).BeginInit();
             SuspendLayout();
             // 
             // tabPartEditor
@@ -71,11 +73,13 @@
             tabPartEditor.Location = new Point(6, 6);
             tabPartEditor.Name = "tabPartEditor";
             tabPartEditor.SelectedIndex = 0;
-            tabPartEditor.Size = new Size(680, 446);
+            tabPartEditor.Size = new Size(624, 431);
             tabPartEditor.TabIndex = 0;
             // 
             // tabPartDetail
             // 
+            tabPartDetail.Controls.Add(button2);
+            tabPartDetail.Controls.Add(button1);
             tabPartDetail.Controls.Add(comboBox3);
             tabPartDetail.Controls.Add(cbxLocation);
             tabPartDetail.Controls.Add(cbxUnitsOfMeasure);
@@ -104,7 +108,7 @@
             tabPartDetail.Location = new Point(4, 24);
             tabPartDetail.Name = "tabPartDetail";
             tabPartDetail.Padding = new Padding(3);
-            tabPartDetail.Size = new Size(672, 418);
+            tabPartDetail.Size = new Size(616, 403);
             tabPartDetail.TabIndex = 0;
             tabPartDetail.Text = "Part Details";
             tabPartDetail.UseVisualStyleBackColor = true;
@@ -349,24 +353,44 @@
             // 
             // tabStockTransactions
             // 
-            tabStockTransactions.Controls.Add(dgvScannedItems);
+            tabStockTransactions.Controls.Add(dgvPartTransactions);
             tabStockTransactions.Location = new Point(4, 24);
             tabStockTransactions.Name = "tabStockTransactions";
             tabStockTransactions.Padding = new Padding(6);
-            tabStockTransactions.Size = new Size(672, 418);
+            tabStockTransactions.Size = new Size(616, 403);
             tabStockTransactions.TabIndex = 1;
             tabStockTransactions.Text = "tabPage2";
             tabStockTransactions.UseVisualStyleBackColor = true;
             // 
-            // dgvScannedItems
+            // dgvPartTransactions
             // 
-            dgvScannedItems.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvScannedItems.Dock = DockStyle.Bottom;
-            dgvScannedItems.Location = new Point(6, 79);
-            dgvScannedItems.Name = "dgvScannedItems";
-            dgvScannedItems.RowTemplate.Height = 25;
-            dgvScannedItems.Size = new Size(660, 333);
-            dgvScannedItems.TabIndex = 0;
+            dgvPartTransactions.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvPartTransactions.Dock = DockStyle.Bottom;
+            dgvPartTransactions.Location = new Point(6, 57);
+            dgvPartTransactions.Name = "dgvPartTransactions";
+            dgvPartTransactions.RowTemplate.Height = 25;
+            dgvPartTransactions.Size = new Size(604, 340);
+            dgvPartTransactions.TabIndex = 0;
+            // 
+            // button1
+            // 
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Location = new Point(495, 355);
+            button1.Name = "button1";
+            button1.Size = new Size(89, 29);
+            button1.TabIndex = 8;
+            button1.Text = "OK";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Location = new Point(414, 355);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 29);
+            button2.TabIndex = 9;
+            button2.Text = "Cancel";
+            button2.UseVisualStyleBackColor = true;
             // 
             // PartEditor
             // 
@@ -375,12 +399,12 @@
             Controls.Add(tabPartEditor);
             Name = "PartEditor";
             Padding = new Padding(6);
-            Size = new Size(692, 458);
+            Size = new Size(636, 443);
             tabPartEditor.ResumeLayout(false);
             tabPartDetail.ResumeLayout(false);
             tabPartDetail.PerformLayout();
             tabStockTransactions.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvScannedItems).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvPartTransactions).EndInit();
             ResumeLayout(false);
         }
 
@@ -414,6 +438,8 @@
         private Label label12;
         private Label lbStockLevel;
         private Label label4;
-        private DataGridView dgvScannedItems;
+        private DataGridView dgvPartTransactions;
+        private Button button2;
+        private Button button1;
     }
 }

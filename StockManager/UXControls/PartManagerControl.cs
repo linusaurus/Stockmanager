@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using Contracts;
+using Service;
+using Service.Contracts;
 using Entities.Models;
+using MediatR;
 using Repository;
 
 namespace StockManager.UXControls
@@ -17,35 +20,51 @@ namespace StockManager.UXControls
     public partial class PartManagerControl : System.Windows.Forms.UserControl
     {
         IRepositoryManager _repositoryManager;
+        IServiceManager _serviceManager;
+        IMediator _mediator;
         List<Part> _selectedParts = new List<Part>();
         Part _selectedPart;
 
         public Part SelectedPart { get => _selectedPart; set => _selectedPart = value; }
 
-        public PartManagerControl(IRepositoryManager repositoryManager)
+
+        public PartManagerControl(IRepositoryManager repositoryManager, IServiceManager serviceManager,IMediator mediator)
         {
             InitializeComponent();
+            _mediator = mediator;
             _repositoryManager = repositoryManager;
-            Grids.BuildPartSearchGrid(dataGridView1);
+            _serviceManager = serviceManager;
+            Grids.BuildPartSearchGrid(dgvPartsListing);
+            dgvPartsListing.SelectionChanged += DgvPartsListing_SelectionChanged;
+            dgvPartsListing.CellDoubleClick += DgvPartsListing_CellDoubleClick;
 
-            this.dataGridView1.SelectionChanged += DataGridView1_SelectionChanged;
         }
 
-        private void DataGridView1_SelectionChanged(object? sender, EventArgs e)
+        private void DgvPartsListing_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
+        {
+            if (_selectedPart != null)
+            {
+                int partID;
+                int.TryParse(_selectedPart.PartID.ToString(), out partID);
+                PartEditForm frm = new PartEditForm(_repositoryManager, _serviceManager, _mediator, partID);
+                frm.ShowDialog();
+            };
+        }
+
+        private void DgvPartsListing_SelectionChanged(object? sender, EventArgs e)
         {
             DataGridView dv = (DataGridView)sender;
             if (dv.DataSource != null)
             {
                 if (dv.SelectedRows.Count > 0)
                 {
-
                     BindingManagerBase bm = BindingContext[dv.DataSource, dv.DataMember];
                     _selectedPart = (Part)bm.Current;
                     txtSelectedPart.Text = _selectedPart.ItemDescription.ToString();
                 }
             }
-
         }
+
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
@@ -77,13 +96,25 @@ namespace StockManager.UXControls
 
             string[] parms = { term0, term, term2 };
 
-            if (txtSearch1.Text.Length > 1)
+            if (txtSearch1.Text.Length > 1 || txtPartID.Text.Length < 1)
             {
                 {
                     var partsList = _repositoryManager.PartRepository.Search(parms, false);
-                    dataGridView1.DataSource = partsList;
+                    dgvPartsListing.DataSource = partsList;
                 }
 
+            }
+            else if (txtPartID.Text.Length > 0)
+            {
+                int id;
+                    
+                if (int.TryParse(txtPartID.Text, out id ) )
+                {
+                    PartEditForm frm = new PartEditForm(_repositoryManager, _serviceManager,_mediator,id);
+                    frm.ShowDialog();   
+                }
+                   
+                
             }
             else { return; }
 
@@ -115,13 +146,25 @@ namespace StockManager.UXControls
                 {
                     if (dv.SelectedRows.Count > 0)
                     {
-                        BindingManagerBase? bm = dv.BindingContext?[dataGridView1.DataSource, dataGridView1.DataMember];
+                        BindingManagerBase? bm = dv.BindingContext?[dgvPartsListing.DataSource, dgvPartsListing.DataMember];
                         SelectedPart = (Part)bm.Current;
                     }
 
                 }
             }
 
+        }
+        /// <summary>
+        /// Associate a SKU with the selected part
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void bntAssociateSKU_Click(object sender, EventArgs e)
+        {
+            if (_selectedPart != null)
+            {
+
+            }
         }
     }
 }

@@ -38,22 +38,22 @@ namespace Repository
             (isSearchThreeNullOrEmpty || a.ItemDescription.Contains(searchTerm[2]))
             );
 
-            
-    
             return searchParts.ToList();
         }
 
-        public Part? GetPartById(int id, bool trackChanges) =>
-            FindByCondition(e => e.PartID == id, false).SingleOrDefault();
+        public Part GetPartById(int id, bool trackChanges) =>
+            FindByCondition(e => e.PartID == id, false).Single();
 
         public void UpdatePart(Part part)
         {
-            Update(part);
-            
+            Update(part);          
         }
 
         public Part GetPartBySKU(string sku, bool trackChanges) =>
-            FindByCondition(e => e.SKU.Contains( sku), false).FirstOrDefault();
+            FindByCondition(e => e.SKU.Contains( sku), false).First();
 
+        public IEnumerable<Part> GetPartsByLocation(int locationID, bool trackChanges) =>
+            FindByCondition(e => e.LocationID==locationID, false).ToList();
+       
     }
 }
