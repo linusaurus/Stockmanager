@@ -121,14 +121,16 @@
             // tsbProccessList
             // 
             tsbProccessList.AutoSize = false;
+            tsbProccessList.BackColor = SystemColors.ControlLight;
             tsbProccessList.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            tsbProccessList.ForeColor = SystemColors.ControlDarkDark;
             tsbProccessList.Image = (Image)resources.GetObject("tsbProccessList.Image");
             tsbProccessList.ImageScaling = ToolStripItemImageScaling.None;
             tsbProccessList.ImageTransparentColor = Color.Magenta;
             tsbProccessList.Margin = new Padding(4, 1, 0, 2);
             tsbProccessList.Name = "tsbProccessList";
             tsbProccessList.Size = new Size(88, 27);
-            tsbProccessList.Text = "Process";
+            tsbProccessList.Text = "Pull Stock";
             tsbProccessList.TextImageRelation = TextImageRelation.TextAboveImage;
             // 
             // tscboJobs

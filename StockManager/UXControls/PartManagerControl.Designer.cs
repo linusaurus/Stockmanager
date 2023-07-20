@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             spcPartManager = new SplitContainer();
+            txtPartID = new TextBox();
             txtSelectedPart = new TextBox();
             bntAssociateSKU = new Button();
             btnPrintLabels = new Button();
@@ -36,7 +37,6 @@
             txtSearch2 = new TextBox();
             txtSearch1 = new TextBox();
             dgvPartsListing = new DataGridView();
-            txtPartID = new TextBox();
             ((System.ComponentModel.ISupportInitialize)spcPartManager).BeginInit();
             spcPartManager.Panel1.SuspendLayout();
             spcPartManager.Panel2.SuspendLayout();
@@ -69,6 +69,14 @@
             spcPartManager.Size = new Size(975, 565);
             spcPartManager.SplitterDistance = 116;
             spcPartManager.TabIndex = 0;
+            // 
+            // txtPartID
+            // 
+            txtPartID.BackColor = SystemColors.Info;
+            txtPartID.Location = new Point(368, 20);
+            txtPartID.Name = "txtPartID";
+            txtPartID.Size = new Size(85, 23);
+            txtPartID.TabIndex = 6;
             // 
             // txtSelectedPart
             // 
@@ -122,6 +130,7 @@
             txtSearch1.Name = "txtSearch1";
             txtSearch1.Size = new Size(100, 23);
             txtSearch1.TabIndex = 0;
+            txtSearch1.TextChanged += txtSearch1_TextChanged;
             // 
             // dgvPartsListing
             // 
@@ -131,18 +140,11 @@
             dgvPartsListing.Dock = DockStyle.Fill;
             dgvPartsListing.Location = new Point(6, 6);
             dgvPartsListing.Name = "dgvPartsListing";
+            dgvPartsListing.ReadOnly = true;
             dgvPartsListing.RowTemplate.Height = 25;
             dgvPartsListing.Size = new Size(963, 433);
             dgvPartsListing.TabIndex = 4;
             dgvPartsListing.SelectionChanged += dataGridView1_SelectionChanged_1;
-            // 
-            // txtPartID
-            // 
-            txtPartID.BackColor = SystemColors.Info;
-            txtPartID.Location = new Point(368, 20);
-            txtPartID.Name = "txtPartID";
-            txtPartID.Size = new Size(85, 23);
-            txtPartID.TabIndex = 6;
             // 
             // PartManagerControl
             // 

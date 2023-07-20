@@ -52,6 +52,7 @@ namespace StockManager
 
             // PartID Column --
             DataGridViewTextBoxColumn col_ID = new DataGridViewTextBoxColumn();
+            col_ID.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             col_ID.HeaderText = "ID";
             col_ID.DataPropertyName = "PartID";
             col_ID.Width = 55;
@@ -66,14 +67,14 @@ namespace StockManager
             // ManufacturerPartNumber Column --
             DataGridViewTextBoxColumn col_Manufacturer = new DataGridViewTextBoxColumn();
             col_Manufacturer.HeaderText = "Manufacturer";
-            col_Manufacturer.DataPropertyName = "ManuName";
+            col_Manufacturer.DataPropertyName = "Manufacturer";
             col_Manufacturer.Width = 140;
 
             // ManufacturerPartNumber Column --
             DataGridViewTextBoxColumn col_ManufacturerPart = new DataGridViewTextBoxColumn();
             col_ManufacturerPart.HeaderText = "Manu-PartNumber";
-            col_ManufacturerPart.DataPropertyName = "PartNumber";
-            col_ManufacturerPart.Width = 140;
+            col_ManufacturerPart.DataPropertyName = "ManuPartNUm";
+            col_ManufacturerPart.Width = 110;
             // DateAdded Column --
             DataGridViewTextBoxColumn col_DateAdded = new DataGridViewTextBoxColumn();
             col_DateAdded.DefaultCellStyle = dstyleDate;
@@ -85,7 +86,7 @@ namespace StockManager
             DataGridViewTextBoxColumn col_Addedby=  new DataGridViewTextBoxColumn();
             col_Addedby.HeaderText = "Added by";
             col_Addedby.DataPropertyName = "AddedBy";
-            col_Addedby.Width = 140;
+            col_Addedby.Width = 120;
 
 
             dg.Columns.AddRange(col_ID, col_Description, col_Manufacturer, col_ManufacturerPart, col_DateAdded, col_Addedby);

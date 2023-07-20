@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Entities.Models;
 using System.Threading.Tasks;
+using Shared.DataTransferObjects;
 
 namespace Contracts
 {

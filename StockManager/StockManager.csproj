@@ -10,6 +10,7 @@
     <Title>Mosiac Stockmanager</Title>
     <Copyright>Weaselware 2023</Copyright>
     <PackageIcon>inventory (1).png</PackageIcon>
+    <AssemblyVersion>1.1.0.1</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -51,6 +52,7 @@
     <ProjectReference Include="..\Entities\Entities.csproj" />
     <ProjectReference Include="..\Repository\Repository.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

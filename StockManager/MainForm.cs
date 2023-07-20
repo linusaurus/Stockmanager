@@ -38,7 +38,7 @@ namespace StockManager
         private readonly IRepositoryManager _repositoryManager;
 
 
-        public MainForm(IRepositoryManager repositoryManager,IServiceManager serviceManager ,IMediator mediator)
+        public MainForm(IRepositoryManager repositoryManager, IServiceManager serviceManager, IMediator mediator)
         {
             InitializeComponent();
             _mediator = mediator;
@@ -64,10 +64,11 @@ namespace StockManager
 
             BarcodeScannerManager.Instance.DataReceived += OnDataReceived;
 
-            PartManagerControl ctr = new PartManagerControl( repositoryManager,_serviceManager, mediator);
+            PartManagerControl ctr = new PartManagerControl(repositoryManager, _serviceManager, mediator);
             ctr.Dock = DockStyle.Fill;
+            ctr.Parent = this;
             tbPartManager.Controls.Add(ctr);
-           
+
 
             LoadJobs();
 
@@ -77,13 +78,13 @@ namespace StockManager
             //--Event Wiring
             bsItems.ListChanged += BsItems_ListChanged;
             dvgStockList.SelectionChanged += DvgStockList_SelectionChanged;
- 
+
             //--Event Wiring
         }
 
         private void Ctr_SelectedChanged(object? sender, EventArgs e)
         {
-          
+
         }
 
         private void DvgStockList_SelectionChanged(object? sender, EventArgs e)
@@ -107,21 +108,30 @@ namespace StockManager
             {
                 if (_listIsActive != value)
                 {
+                    //The list is active and can be processed --
                     if (value == true)
                     {
-                        tsbNewStockList.Enabled = !value;
                         tsbProccessList.Enabled = value;
                         dvgStockList.Visible = value;
-                        tsbProccessList.BackColor = System.Drawing.Color.OldLace;
+                        tsbProccessList.BackColor = System.Drawing.Color.SlateBlue;
+                        tsbProccessList.ForeColor = System.Drawing.Color.White;
+                        tsbNewStockList.Text = "Cancel";
+                        tsbNewStockList.BackColor = System.Drawing.Color.Blue;
+                        tsbNewStockList.ForeColor = System.Drawing.Color.Yellow;
+                        //*---------ACTIVE-------------*
                         _listIsActive = value;
                     }
+                    //The list is Canceled and restarted --
                     else if (value == false)
-                    {
-                        tsbNewStockList.Enabled = true;
-                        tsbProccessList.Enabled = false;
+                    {                                             
                         bsItems.Clear();
+                        tsbProccessList.BackColor = System.Drawing.Color.Gray;
+                        tsbProccessList.ForeColor = System.Drawing.Color.WhiteSmoke;
+                        tsbNewStockList.Text = "New List";
+                        tsbNewStockList.BackColor = System.Drawing.Color.Black;
+                        tsbNewStockList.ForeColor = System.Drawing.Color.White;
                         dvgStockList.Visible = value;
-                        tsbProccessList.BackColor = System.Drawing.Color.White;
+                        //*--------INACTIVE-----------*
                         _listIsActive = value;
                     }
 
@@ -132,11 +142,10 @@ namespace StockManager
 
         }
 
-
+        //Process the list and reduce inventory stock
         private bool ProcessItem()
         {
             bool result = false;
-
 
             List<Inventory> inventories = new List<Inventory>();
             foreach (StockItem item in bsItems.List)
@@ -154,9 +163,7 @@ namespace StockManager
                     TransActionType = 3,
                     UnitOfMeasureID = part.UnitOfMeasureID.GetValueOrDefault()
                 };
-
                 _repositoryManager.InventoryRepository.Update(inventory);
-
             }
             _repositoryManager.Save();
             ListIsActive = false;
@@ -171,7 +178,7 @@ namespace StockManager
             {
 
                 tsbProccessList.Enabled = true;
-                tsbProccessList.BackColor = System.Drawing.Color.Tan;
+               //tsbProccessList.BackColor = System.Drawing.Color.Tan;
                 tslStatusLabel.Text = $"Items = {bsItems.List.Count.ToString()}";
 
             }
@@ -180,7 +187,9 @@ namespace StockManager
         private void OnDataReceived(object? sender, BarcodeScanEventArgs e)
         {
             _mediator.Send(new Ping());
-            _lastScanned = Regex.Replace(e.Data, "[^0-9]", "");
+
+
+            _lastScanned = e.Data;
             Invoke(new Action(() => DisplayBarcodeType(e.BarcodeType.ToString())));
             Invoke(new Action(() => DisplayBarcodeValue(e.Data)));
             // if its our part label code
@@ -240,14 +249,22 @@ namespace StockManager
             var foundPart = _repositoryManager.PartRepository.GetPartBySKU(partScanSKU, false);
             if (foundPart != null)
             {
-                StockItem lineItem = new StockItem();
-                lineItem.PartID = foundPart.PartID;
-                lineItem.SKU = foundPart.SKU.ToString();
-                lineItem.Description = foundPart.ItemDescription;
-                lineItem.Location = foundPart.Location;
-                lineItem.InventoryAmount = 1.0m;
-                lineItem.DateStamp = DateTime.Now;
-                bsItems.Add(lineItem);
+                if (bsItems.List.Contains(new StockItem { PartID = foundPart.PartID }))
+                {
+                    int index = bsItems.IndexOf(new StockItem { PartID = foundPart.PartID });
+                    ((StockItem)bsItems[index]).InventoryAmount++;
+                }
+                else
+                {
+                    StockItem lineItem = new StockItem();
+                    lineItem.PartID = foundPart.PartID;
+                    lineItem.SKU = foundPart.SKU.ToString();
+                    lineItem.Description = foundPart.ItemDescription;
+                    lineItem.Location = foundPart.Location;
+                    lineItem.InventoryAmount = 1.0m;
+                    lineItem.DateStamp = DateTime.Now;
+                    bsItems.Add(lineItem);
+                }
             }
 
             dvgStockList.Refresh();
@@ -265,7 +282,12 @@ namespace StockManager
                 {
                     case "tsbNewStockList":
 
-                        ListIsActive = true;
+                        if (!ListIsActive)
+                        { ListIsActive = true; }
+                        else
+                        {
+                            ListIsActive = false;
+                        }
 
                         break;
                     case "tsbProccessList":
@@ -276,7 +298,6 @@ namespace StockManager
                         }
                         break;
                     default: break;
-
                 }
             }
         }

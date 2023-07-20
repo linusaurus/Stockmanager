@@ -32,6 +32,7 @@
             btnCancel = new Button();
             tabPartTabs = new TabControl();
             tabDetails = new TabPage();
+            txtSKU = new TextBox();
             cbxUnitsOfMeasure = new ComboBox();
             txtWaste = new TextBox();
             txtManuPartName = new TextBox();
@@ -62,6 +63,8 @@
             btnDelete = new Button();
             btnTransEdit = new Button();
             dgvPartTransactions = new DataGridView();
+            btnScanCode = new Button();
+            label13 = new Label();
             tabPartTabs.SuspendLayout();
             tabDetails.SuspendLayout();
             tabTransactions.SuspendLayout();
@@ -100,6 +103,8 @@
             // 
             // tabDetails
             // 
+            tabDetails.Controls.Add(btnScanCode);
+            tabDetails.Controls.Add(txtSKU);
             tabDetails.Controls.Add(cbxUnitsOfMeasure);
             tabDetails.Controls.Add(txtWaste);
             tabDetails.Controls.Add(txtManuPartName);
@@ -108,6 +113,7 @@
             tabDetails.Controls.Add(txtMarkup);
             tabDetails.Controls.Add(txtUnitCost);
             tabDetails.Controls.Add(cbxObsolute);
+            tabDetails.Controls.Add(label13);
             tabDetails.Controls.Add(label9);
             tabDetails.Controls.Add(label8);
             tabDetails.Controls.Add(label7);
@@ -131,6 +137,13 @@
             tabDetails.TabIndex = 0;
             tabDetails.Text = "Part Details";
             tabDetails.UseVisualStyleBackColor = true;
+            // 
+            // txtSKU
+            // 
+            txtSKU.Location = new Point(522, 250);
+            txtSKU.Name = "txtSKU";
+            txtSKU.Size = new Size(126, 23);
+            txtSKU.TabIndex = 29;
             // 
             // cbxUnitsOfMeasure
             // 
@@ -423,6 +436,27 @@
             dgvPartTransactions.Size = new Size(741, 311);
             dgvPartTransactions.TabIndex = 0;
             // 
+            // btnScanCode
+            // 
+            btnScanCode.Location = new Point(441, 250);
+            btnScanCode.Name = "btnScanCode";
+            btnScanCode.Size = new Size(75, 23);
+            btnScanCode.TabIndex = 30;
+            btnScanCode.Text = "Scanner";
+            btnScanCode.UseVisualStyleBackColor = true;
+            btnScanCode.Click += btnScanCode_Click;
+            // 
+            // label13
+            // 
+            label13.BorderStyle = BorderStyle.FixedSingle;
+            label13.FlatStyle = FlatStyle.Flat;
+            label13.Location = new Point(522, 221);
+            label13.Name = "label13";
+            label13.Size = new Size(126, 23);
+            label13.TabIndex = 18;
+            label13.Text = "UPC Code";
+            label13.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // PartEditForm
             // 
             AcceptButton = btnSave;
@@ -482,5 +516,8 @@
         private Label label10;
         private TextBox txtPartName;
         private TextBox txtPartID;
+        private TextBox txtSKU;
+        private Button btnScanCode;
+        private Label label13;
     }
 }

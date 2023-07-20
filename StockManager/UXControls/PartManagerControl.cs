@@ -14,6 +14,10 @@ using Service.Contracts;
 using Entities.Models;
 using MediatR;
 using Repository;
+using Shared.DataTransferObjects;
+using Motorola.Snapi;
+using Motorola.Snapi.EventArguments;
+using Motorola.Snapi.Constants.Enums;
 
 namespace StockManager.UXControls
 {
@@ -23,12 +27,15 @@ namespace StockManager.UXControls
         IServiceManager _serviceManager;
         IMediator _mediator;
         List<Part> _selectedParts = new List<Part>();
+       // PartSearchList _selectedPart;
         Part _selectedPart;
+
+        private string _lastScanned;
 
         public Part SelectedPart { get => _selectedPart; set => _selectedPart = value; }
 
 
-        public PartManagerControl(IRepositoryManager repositoryManager, IServiceManager serviceManager,IMediator mediator)
+        public PartManagerControl(IRepositoryManager repositoryManager, IServiceManager serviceManager, IMediator mediator)
         {
             InitializeComponent();
             _mediator = mediator;
@@ -38,6 +45,20 @@ namespace StockManager.UXControls
             dgvPartsListing.SelectionChanged += DgvPartsListing_SelectionChanged;
             dgvPartsListing.CellDoubleClick += DgvPartsListing_CellDoubleClick;
 
+            BarcodeScannerManager.Instance.Open();
+            BarcodeScannerManager.Instance.DataReceived += OnDataReceived;
+
+
+        }
+
+        private void OnDataReceived(object? sender, BarcodeScanEventArgs e)
+        {
+            _lastScanned = e.Data;
+            var foundPart =  _repositoryManager.PartRepository.GetPartById(_selectedPart.PartID,true);
+            if (foundPart != null) { foundPart.SKU = e.Data; }
+            _selectedPart.SKU = e.Data;
+            // Invoke(new Action(() => LookupPartSKU(e.Data.ToString())));
+            _repositoryManager.PartRepository.UpdatePart(foundPart);
         }
 
         private void DgvPartsListing_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
@@ -47,7 +68,16 @@ namespace StockManager.UXControls
                 int partID;
                 int.TryParse(_selectedPart.PartID.ToString(), out partID);
                 PartEditForm frm = new PartEditForm(_repositoryManager, _serviceManager, _mediator, partID);
-                frm.ShowDialog();
+                DataGridView dv = (DataGridView)sender;
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    _selectedPart.ItemDescription = frm.Part.ItemDescription;
+                    _selectedPart.ManuPartNum = frm.Part.ManuPartNum;
+                    BindingManagerBase bm = BindingContext[dv.DataSource, dv.DataMember];
+                    ((Part)bm.Current).ItemDescription = frm.Part.ItemDescription;
+                    bm.EndCurrentEdit();
+                    dv.Refresh();
+                }
             };
         }
 
@@ -58,8 +88,13 @@ namespace StockManager.UXControls
             {
                 if (dv.SelectedRows.Count > 0)
                 {
-                    BindingManagerBase bm = BindingContext[dv.DataSource, dv.DataMember];
-                    _selectedPart = (Part)bm.Current;
+                    BindingManagerBase? bm = dv.BindingContext?[dgvPartsListing.DataSource, dgvPartsListing.DataMember];
+                    if (bm != null)
+                    {
+                        var pick = (PartSearchList)bm.Current;
+                        SelectedPart = _repositoryManager.PartRepository.GetPartById(pick.PartID, false);
+                    }
+
                     txtSelectedPart.Text = _selectedPart.ItemDescription.ToString();
                 }
             }
@@ -78,8 +113,6 @@ namespace StockManager.UXControls
                 txtSearch1.Text = string.Empty;
                 txtSearch2.Text = string.Empty;
                 txtSearch3.Text = string.Empty;
-
-
                 return true;
             }
             else
@@ -99,22 +132,23 @@ namespace StockManager.UXControls
             if (txtSearch1.Text.Length > 1 || txtPartID.Text.Length < 1)
             {
                 {
-                    var partsList = _repositoryManager.PartRepository.Search(parms, false);
-                    dgvPartsListing.DataSource = partsList;
+
+                    var partsList = _serviceManager.PartService.Search(parms, false);
+                    dgvPartsListing.DataSource = partsList.ToList();
                 }
 
             }
             else if (txtPartID.Text.Length > 0)
             {
                 int id;
-                    
-                if (int.TryParse(txtPartID.Text, out id ) )
+
+                if (int.TryParse(txtPartID.Text, out id))
                 {
-                    PartEditForm frm = new PartEditForm(_repositoryManager, _serviceManager,_mediator,id);
-                    frm.ShowDialog();   
+                    PartEditForm frm = new PartEditForm(_repositoryManager, _serviceManager, _mediator, id);
+                    frm.ShowDialog();
                 }
-                   
-                
+
+
             }
             else { return; }
 
@@ -147,7 +181,12 @@ namespace StockManager.UXControls
                     if (dv.SelectedRows.Count > 0)
                     {
                         BindingManagerBase? bm = dv.BindingContext?[dgvPartsListing.DataSource, dgvPartsListing.DataMember];
-                        SelectedPart = (Part)bm.Current;
+                        if (bm != null)
+                        {
+                            var pick = (PartSearchList)bm.Current;
+                            SelectedPart = _repositoryManager.PartRepository.GetPartById(pick.PartID, false);
+
+                        }
                     }
 
                 }
@@ -165,6 +204,11 @@ namespace StockManager.UXControls
             {
 
             }
+        }
+
+        private void txtSearch1_TextChanged(object sender, EventArgs e)
+        {
+            txtPartID.Text = String.Empty;
         }
     }
 }

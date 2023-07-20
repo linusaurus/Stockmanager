@@ -12,6 +12,7 @@ using MediatR;
 using Repository;
 using Entities.Models;
 using Service.Contracts;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace StockManager
 {
@@ -22,6 +23,8 @@ namespace StockManager
         private readonly IMediator _mediator;
         private BindingSource _bindingSource = new BindingSource();
         private Part _part;
+
+        public Part Part { get => _part; set => _part = value; }
 
         public PartEditForm(IRepositoryManager repositoryManager, IServiceManager serviceManager, IMediator mediator, int partID)
         {
@@ -35,11 +38,12 @@ namespace StockManager
                 if (_part.ItemDescription != null && _part.ItemDescription.ToString().Length > 50)
                 {
                     this.Text = $"Part : {_part.PartID.ToString()} :: {_part.ItemDescription.ToString().Substring(1, 49) + "..."}";
-                }else
+                }
+                else
                 {
                     this.Text = $"Part : {_part.PartID.ToString()} :: {_part.ItemDescription}";
                 }
-                
+
             }
 
             _bindingSource.DataSource = _part;
@@ -51,7 +55,7 @@ namespace StockManager
             //-------------wire events ------------
             _bindingSource.ListChanged += _bindingSource_ListChanged;
             cboLocations.SelectedValueChanged += CboLocations_SelectedValueChanged;
-           
+
 
         }
 
@@ -60,19 +64,19 @@ namespace StockManager
             if (cboLocations.SelectedValue != null)
             {
                 ComboBox cb = (ComboBox)sender;
-              // ((Part)_bindingSource.Current).LocationID = ((Location)cb.SelectedItem).LocationID;
+
             }
 
         }
 
         private void _bindingSource_ListChanged(object? sender, ListChangedEventArgs e)
-        {         
-            ButtonToogle(true);          
+        {
+            ButtonToogle(true);
         }
 
         private void ButtonToogle(bool dirty)
         {
-            if (dirty) 
+            if (dirty)
             {
                 btnSave.Enabled = true;
                 btnSave.FlatStyle = FlatStyle.Flat;
@@ -108,6 +112,8 @@ namespace StockManager
             txtWaste.DataBindings.Add("Text", _part, "Waste", true, DataSourceUpdateMode.OnPropertyChanged);
             txtWeight.DataBindings.Clear();
             txtWeight.DataBindings.Add("Text", _part, "Weight", true, DataSourceUpdateMode.OnPropertyChanged);
+            txtSKU.DataBindings.Clear();
+            txtSKU.DataBindings.Add("Text", _part, "SKU", true, DataSourceUpdateMode.OnPropertyChanged);
 
         }
 
@@ -127,15 +133,21 @@ namespace StockManager
             cbxUnitsOfMeasure.DataSource = _repositoryManager.UnitOfMeasureRepository.GetAll(false);
             cbxUnitsOfMeasure.DisplayMember = "UnitName";
             cbxUnitsOfMeasure.ValueMember = "UnitOfMeasureID";
-            cbxUnitsOfMeasure.DataBindings.Add("SelectedValue", _bindingSource, "UnitOfMeasureID",true,DataSourceUpdateMode.OnPropertyChanged);
+            cbxUnitsOfMeasure.DataBindings.Add("SelectedValue", _bindingSource, "UnitOfMeasureID", true, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            //_repositoryManager.PartRepository.UpdatePart(_part);
+            _repositoryManager.PartRepository.UpdatePart(_part);
             _repositoryManager.Save();
+
             ButtonToogle(false);
             this.Close();
+        }
+
+        private void btnScanCode_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Entities.Models;
 using Contracts;
 using Entities;
@@ -30,7 +31,7 @@ namespace Repository
             var isSearchTwoNullOrEmpty = string.IsNullOrEmpty(searchTerm[1]);
             var isSearchThreeNullOrEmpty = string.IsNullOrEmpty(searchTerm[2]);
 
-            searchParts = base.RepositoryContext.Part.Where(a =>
+            searchParts = base.RepositoryContext.Part.Include(m => m.GetManu).Where(a =>
             (isSearchOneNullOrEmpty || a.ItemDescription.Contains(searchTerm[0])
             ) &&
             (isSearchTwoNullOrEmpty || a.ItemDescription.Contains(searchTerm[1])
@@ -42,18 +43,20 @@ namespace Repository
         }
 
         public Part GetPartById(int id, bool trackChanges) =>
-            FindByCondition(e => e.PartID == id, false).Single();
+            FindByCondition(e => e.PartID == id, trackChanges).Single();
 
         public void UpdatePart(Part part)
         {
             Update(part);          
         }
-
-        public Part GetPartBySKU(string sku, bool trackChanges) =>
-            FindByCondition(e => e.SKU.Contains( sku), false).First();
+        // Look up the part using the UPC code returned by scanner
+        public Part GetPartBySKU(string sku, bool trackChanges)
+        {
+            return FindByCondition(e => e.SKU.Contains(sku), trackChanges).FirstOrDefault();
+        }
 
         public IEnumerable<Part> GetPartsByLocation(int locationID, bool trackChanges) =>
-            FindByCondition(e => e.LocationID==locationID, false).ToList();
+            FindByCondition(e => e.LocationID==locationID, trackChanges).ToList();
        
     }
 }

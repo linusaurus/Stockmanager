@@ -39,6 +39,8 @@ namespace Entities.Models
         public string Notes { get; set; }
         public int? LocationID { get; set; }
 
+        public Manu GetManu { get; set; }
+
         public virtual UnitOfMeasure UnitOfMeasure { get; set; }
         public virtual ICollection<Resource> Resource { get; set; }
 
