@@ -71,6 +71,12 @@ namespace StockManager
             col_Manufacturer.Width = 140;
 
             // ManufacturerPartNumber Column --
+            DataGridViewTextBoxColumn col_UPC = new DataGridViewTextBoxColumn();
+            col_UPC.HeaderText = "UPC";
+            col_UPC.DataPropertyName = "UPC";
+            col_UPC.Width = 95;
+
+            // ManufacturerPartNumber Column --
             DataGridViewTextBoxColumn col_ManufacturerPart = new DataGridViewTextBoxColumn();
             col_ManufacturerPart.HeaderText = "Manu-PartNumber";
             col_ManufacturerPart.DataPropertyName = "ManuPartNUm";
@@ -89,7 +95,7 @@ namespace StockManager
             col_Addedby.Width = 120;
 
 
-            dg.Columns.AddRange(col_ID, col_Description, col_Manufacturer, col_ManufacturerPart, col_DateAdded, col_Addedby);
+            dg.Columns.AddRange(col_ID, col_Description, col_Manufacturer,col_UPC , col_ManufacturerPart, col_DateAdded, col_Addedby);
 
         }
         /// <summary>

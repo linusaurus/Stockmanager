@@ -10,7 +10,7 @@
     <Title>Mosiac Stockmanager</Title>
     <Copyright>Weaselware 2023</Copyright>
     <PackageIcon>inventory (1).png</PackageIcon>
-    <AssemblyVersion>1.1.0.1</AssemblyVersion>
+    <AssemblyVersion>1.1.0.2</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -10,6 +10,7 @@ using Neodynamic.SDK.Printing;
 using StockManager.UXControls;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+using System.Reflection;
 
 namespace StockManager
 {
@@ -45,9 +46,8 @@ namespace StockManager
             _serviceManager = serviceManager;
             ThermalLabel.LicenseOwner = "Richard Young-Ultimate Edition-Developer License";
             ThermalLabel.LicenseKey = "RALJ9V89HNTFJMHZWRMH6MFP82AXAXDTX3ZXUESKXRFLXAZ346GQ";
-
-
             _repositoryManager = repositoryManager;
+
             var hit = _repositoryManager.PartRepository.GetPartById(1, false);
             BarcodeScannerManager.Instance.Open();
 
@@ -187,22 +187,25 @@ namespace StockManager
         private void OnDataReceived(object? sender, BarcodeScanEventArgs e)
         {
             _mediator.Send(new Ping());
-
-
+            
             _lastScanned = e.Data;
             Invoke(new Action(() => DisplayBarcodeType(e.BarcodeType.ToString())));
             Invoke(new Action(() => DisplayBarcodeValue(e.Data)));
             // if its our part label code
             if (e.BarcodeType == BarcodeType.Code39)
             {
-                //Invoke(new Action(() => LookupPartScanned(1.ToString())));
-                Invoke(new Action(() => LookupPartScanned(_lastScanned)));
+                if (e.Data.Length < 10)
+                {
+                    //Invoke(new Action(() => LookupPartScanned(1.ToString())));
+                    Invoke(new Action(() => LookupPartScanned(_lastScanned)));
+                }
+               
 
             }
             // any other type of code assume its a SKU
             // else if (e.BarcodeType == BarcodeType.UPCA || e.BarcodeType == BarcodeType.EAN13 || e.BarcodeType == BarcodeType.Code128)
             // any kind of symbiology other than CODE 39
-            else
+            if(e.Data.Length > 1) 
             {
                 Invoke(new Action(() => LookupPartSKU(e.Data.ToString())));
             }

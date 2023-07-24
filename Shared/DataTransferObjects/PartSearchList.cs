@@ -10,16 +10,13 @@ namespace Shared.DataTransferObjects
 {
     public class PartSearchList 
     {
-        
-
+       
         public int PartID { get; set; }
         public string? ItemDescription { get; set; }
         public string? ManuPartNUm { get; set; }
         public string? Manufacturer { get; set; }  
+        public string? UPC { get; set; }
         public string? DateAdded { get; set; } 
         public string? AddedBy { get; set; } 
-
-
-       
     }
 }

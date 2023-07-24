@@ -45,21 +45,26 @@ namespace StockManager.UXControls
             dgvPartsListing.SelectionChanged += DgvPartsListing_SelectionChanged;
             dgvPartsListing.CellDoubleClick += DgvPartsListing_CellDoubleClick;
 
-            BarcodeScannerManager.Instance.Open();
-            BarcodeScannerManager.Instance.DataReceived += OnDataReceived;
+           //BarcodeScannerManager.Instance.Open();
+           // BarcodeScannerManager.Instance.DataReceived += OnDataReceived;
 
 
         }
 
-        private void OnDataReceived(object? sender, BarcodeScanEventArgs e)
-        {
-            _lastScanned = e.Data;
-            var foundPart =  _repositoryManager.PartRepository.GetPartById(_selectedPart.PartID,true);
-            if (foundPart != null) { foundPart.SKU = e.Data; }
-            _selectedPart.SKU = e.Data;
-            // Invoke(new Action(() => LookupPartSKU(e.Data.ToString())));
-            _repositoryManager.PartRepository.UpdatePart(foundPart);
-        }
+        //private void OnDataReceived(object? sender, BarcodeScanEventArgs e)
+        //{
+        //    /_lastScanned = e.Data;
+        //    if (e.BarcodeType == BarcodeType.Code39)
+        //    {
+        //        var foundPart = _repositoryManager.PartRepository.GetPartById(_selectedPart.PartID, true);
+        //    }
+
+        //    //else{ foundPart.SKU = e.Data; }
+        //    //_selectedPart.SKU = e.Data;
+        //    //}
+        //    //// Invoke(new Action(() => LookupPartSKU(e.Data.ToString())));
+        //    //_repositoryManager.PartRepository.UpdatePart(foundPart);
+        //}
 
         private void DgvPartsListing_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
         {
@@ -147,8 +152,6 @@ namespace StockManager.UXControls
                     PartEditForm frm = new PartEditForm(_repositoryManager, _serviceManager, _mediator, id);
                     frm.ShowDialog();
                 }
-
-
             }
             else { return; }
 

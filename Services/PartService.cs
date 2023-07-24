@@ -26,7 +26,8 @@ namespace Service
                 ItemDescription = dto.ItemDescription,
                 Manufacturer = dto.GetManu.Manufacturer,
                 ManuPartNUm = dto.ManuPartNum,
-                PartID = dto.PartID
+                PartID = dto.PartID,
+                UPC = dto.SKU              
 
             } ).ToList();
 
