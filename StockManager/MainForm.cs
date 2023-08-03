@@ -48,6 +48,12 @@ namespace StockManager
             ThermalLabel.LicenseKey = "RALJ9V89HNTFJMHZWRMH6MFP82AXAXDTX3ZXUESKXRFLXAZ346GQ";
             _repositoryManager = repositoryManager;
 
+
+            string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            this.Text = "Stock-Manager " + version;
+
+
+
             var hit = _repositoryManager.PartRepository.GetPartById(1, false);
             BarcodeScannerManager.Instance.Open();
 
@@ -68,6 +74,11 @@ namespace StockManager
             ctr.Dock = DockStyle.Fill;
             ctr.Parent = this;
             tbPartManager.Controls.Add(ctr);
+
+            LocationsManager loc = new LocationsManager(repositoryManager, _serviceManager, mediator);  
+            loc.Dock = DockStyle.Fill;
+            loc.Parent = this;
+            tabLocations.Controls.Add(loc);
 
 
             LoadJobs();
@@ -123,7 +134,7 @@ namespace StockManager
                     }
                     //The list is Canceled and restarted --
                     else if (value == false)
-                    {                                             
+                    {
                         bsItems.Clear();
                         tsbProccessList.BackColor = System.Drawing.Color.Gray;
                         tsbProccessList.ForeColor = System.Drawing.Color.WhiteSmoke;
@@ -159,7 +170,6 @@ namespace StockManager
                     EmpID = 8,
                     JobID = _selectedJob.jobID,
                     InventoryAmount = item.InventoryAmount * -1.0m,
-                    Location = part.Location,
                     TransActionType = 3,
                     UnitOfMeasureID = part.UnitOfMeasureID.GetValueOrDefault()
                 };
@@ -178,7 +188,7 @@ namespace StockManager
             {
 
                 tsbProccessList.Enabled = true;
-               //tsbProccessList.BackColor = System.Drawing.Color.Tan;
+                //tsbProccessList.BackColor = System.Drawing.Color.Tan;
                 tslStatusLabel.Text = $"Items = {bsItems.List.Count.ToString()}";
 
             }
@@ -187,7 +197,7 @@ namespace StockManager
         private void OnDataReceived(object? sender, BarcodeScanEventArgs e)
         {
             _mediator.Send(new Ping());
-            
+
             _lastScanned = e.Data;
             Invoke(new Action(() => DisplayBarcodeType(e.BarcodeType.ToString())));
             Invoke(new Action(() => DisplayBarcodeValue(e.Data)));
@@ -196,16 +206,18 @@ namespace StockManager
             {
                 if (e.Data.Length < 10)
                 {
-                    //Invoke(new Action(() => LookupPartScanned(1.ToString())));
-                    Invoke(new Action(() => LookupPartScanned(_lastScanned)));
+                    // remove any no numeric characters ---
+                    string s = Regex.Replace(e.Data, "[^0-9.]", "");
+                    // return our part number
+                    Invoke(new Action(() => LookupPartScanned(s)));
                 }
-               
+
 
             }
             // any other type of code assume its a SKU
             // else if (e.BarcodeType == BarcodeType.UPCA || e.BarcodeType == BarcodeType.EAN13 || e.BarcodeType == BarcodeType.Code128)
             // any kind of symbiology other than CODE 39
-            if(e.Data.Length > 1) 
+            if (e.Data.Length > 1)
             {
                 Invoke(new Action(() => LookupPartSKU(e.Data.ToString())));
             }
@@ -219,7 +231,7 @@ namespace StockManager
             int testValue;
             if (int.TryParse(partID, out testValue))
             {
-                var foundPart = _repositoryManager.PartRepository.GetPartById(testValue, false);
+                var foundPart = _repositoryManager.PartRepository.GetPartById(testValue, true);
                 if (foundPart != null)
                 {
 
@@ -234,7 +246,7 @@ namespace StockManager
                         lineItem.PartID = foundPart.PartID;
                         lineItem.SKU = foundPart.SKU;
                         lineItem.Description = foundPart.ItemDescription;
-                        lineItem.Location = foundPart.Location;
+                        //lineItem.Location = foundPart.LocationNavigation.LocationName;
                         lineItem.InventoryAmount = 1.0m;
                         lineItem.DateStamp = DateTime.Now;
 
@@ -263,7 +275,7 @@ namespace StockManager
                     lineItem.PartID = foundPart.PartID;
                     lineItem.SKU = foundPart.SKU.ToString();
                     lineItem.Description = foundPart.ItemDescription;
-                    lineItem.Location = foundPart.Location;
+                    // lineItem.Location = foundPart.LocationNavigation.LocationName;
                     lineItem.InventoryAmount = 1.0m;
                     lineItem.DateStamp = DateTime.Now;
                     bsItems.Add(lineItem);

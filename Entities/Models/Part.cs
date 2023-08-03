@@ -11,6 +11,7 @@ namespace Entities.Models
         {
             Resource = new HashSet<Resource>();
             Doc = new HashSet<Document>();
+            Location = new Location();
         }
 
         public int PartID { get; set; }
@@ -22,7 +23,7 @@ namespace Entities.Models
         public int? PartTypeID { get; set; }
         public decimal? Cost { get; set; }
         public int? UnitOfMeasureID { get; set; }
-        public string Location { get; set; }
+      
         public decimal? Weight { get; set; }
         public decimal? Waste { get; set; }
         public decimal? MarkUp { get; set; }
@@ -38,9 +39,10 @@ namespace Entities.Models
         public decimal? Amount_Required { get; set; }
         public string Notes { get; set; }
         public int? LocationID { get; set; }
+        public int? Count { get; set; }
 
-        public Manu GetManu { get; set; }
-
+        public virtual Manu Manu { get; set; }
+        public virtual Location Location{ get; set; }
         public virtual UnitOfMeasure UnitOfMeasure { get; set; }
         public virtual ICollection<Resource> Resource { get; set; }
 

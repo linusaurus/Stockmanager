@@ -1,7 +1,9 @@
 ﻿using Contracts;
+using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,19 +19,39 @@ namespace Service
             _repository = repository;
         }
 
+        public Part FindFullPart(int partId, bool trackChanges)
+        {
+          var p = _repository.PartRepository.GetPartById(partId, trackChanges);
+          return p;
+            
+        }
+       
+
+       
+
         public IEnumerable<PartSearchList> Search(string[] searchTerm, bool trackChanges)
         {
-            var result =  _repository.PartRepository.Search(searchTerm, trackChanges).Select(dto => new PartSearchList
-            { 
+            IQueryable<Part> searchParts = new List<Part>().AsQueryable();
+            searchParts.Include(m => m.Manu);
+            searchParts.Include(l => l.Location);
+            searchParts.Where(r => r.PartID == 1);
+            var d  = searchParts.ToList();
+
+            var result = _repository.PartRepository.Search(searchTerm, trackChanges).Select(dto => new PartSearchList
+            {
                 AddedBy = dto.AddedBy,
                 DateAdded = dto.DateAdded.GetValueOrDefault().ToShortDateString(),
                 ItemDescription = dto.ItemDescription,
-                Manufacturer = dto.GetManu.Manufacturer,
+                Manufacturer = dto.Manu.Manufacturer,
                 ManuPartNUm = dto.ManuPartNum,
+                LocationID = dto.LocationID.GetValueOrDefault(),
+ 
                 PartID = dto.PartID,
-                UPC = dto.SKU              
+                UPC = dto.SKU
 
-            } ).ToList();
+            }).ToList();
+
+           
 
 
             return result;

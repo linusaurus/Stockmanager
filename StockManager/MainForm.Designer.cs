@@ -42,6 +42,7 @@
             tbStockList = new TabPage();
             panel1 = new Panel();
             tbPartManager = new TabPage();
+            tabLocations = new TabPage();
             ((System.ComponentModel.ISupportInitialize)dvgStockList).BeginInit();
             statusStrip1.SuspendLayout();
             tsMainToolBar.SuspendLayout();
@@ -145,6 +146,7 @@
             tabControlApp.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tabControlApp.Controls.Add(tbStockList);
             tabControlApp.Controls.Add(tbPartManager);
+            tabControlApp.Controls.Add(tabLocations);
             tabControlApp.Location = new Point(6, 39);
             tabControlApp.Name = "tabControlApp";
             tabControlApp.SelectedIndex = 0;
@@ -184,6 +186,16 @@
             tbPartManager.TabIndex = 1;
             tbPartManager.Text = "Part Manager";
             tbPartManager.UseVisualStyleBackColor = true;
+            // 
+            // tabLocations
+            // 
+            tabLocations.Location = new Point(4, 24);
+            tabLocations.Name = "tabLocations";
+            tabLocations.Padding = new Padding(3);
+            tabLocations.Size = new Size(972, 522);
+            tabLocations.TabIndex = 2;
+            tabLocations.Text = "Locations";
+            tabLocations.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -226,5 +238,6 @@
         private ToolStripComboBox tscboJobs;
         private ToolStripStatusLabel tslStatusLabel;
         private Panel panel1;
+        private TabPage tabLocations;
     }
 }

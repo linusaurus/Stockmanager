@@ -31,7 +31,6 @@
             spcPartManager = new SplitContainer();
             txtPartID = new TextBox();
             txtSelectedPart = new TextBox();
-            bntAssociateSKU = new Button();
             btnPrintLabels = new Button();
             txtSearch3 = new TextBox();
             txtSearch2 = new TextBox();
@@ -55,7 +54,6 @@
             // 
             spcPartManager.Panel1.Controls.Add(txtPartID);
             spcPartManager.Panel1.Controls.Add(txtSelectedPart);
-            spcPartManager.Panel1.Controls.Add(bntAssociateSKU);
             spcPartManager.Panel1.Controls.Add(btnPrintLabels);
             spcPartManager.Panel1.Controls.Add(txtSearch3);
             spcPartManager.Panel1.Controls.Add(txtSearch2);
@@ -86,22 +84,10 @@
             txtSelectedPart.Size = new Size(440, 56);
             txtSelectedPart.TabIndex = 5;
             // 
-            // bntAssociateSKU
-            // 
-            bntAssociateSKU.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            bntAssociateSKU.Location = new Point(830, 20);
-            bntAssociateSKU.Name = "bntAssociateSKU";
-            bntAssociateSKU.Size = new Size(136, 30);
-            bntAssociateSKU.TabIndex = 4;
-            bntAssociateSKU.Text = "Associate SKU";
-            bntAssociateSKU.TextImageRelation = TextImageRelation.ImageBeforeText;
-            bntAssociateSKU.UseVisualStyleBackColor = true;
-            bntAssociateSKU.Click += bntAssociateSKU_Click;
-            // 
             // btnPrintLabels
             // 
             btnPrintLabels.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnPrintLabels.Location = new Point(679, 20);
+            btnPrintLabels.Location = new Point(830, 20);
             btnPrintLabels.Name = "btnPrintLabels";
             btnPrintLabels.Size = new Size(136, 30);
             btnPrintLabels.TabIndex = 4;
@@ -172,7 +158,6 @@
         private TextBox txtSearch1;
         private Button btnPrintLabels;
         private TextBox txtSelectedPart;
-        private Button bntAssociateSKU;
         private TextBox txtPartID;
     }
 }

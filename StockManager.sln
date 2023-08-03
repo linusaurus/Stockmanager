@@ -18,7 +18,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Contracts", "Servic
 		{31E4E63F-E2E5-4B39-9B8F-7232C988167D} = {31E4E63F-E2E5-4B39-9B8F-7232C988167D}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{2BAA1C6D-B556-4205-9004-4ABF8195024C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{2BAA1C6D-B556-4205-9004-4ABF8195024C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManagerTester", "StockManagerTester\StockManagerTester.csproj", "{4ECBE3F0-032E-443F-8A1B-EA1F5A00CD84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +56,10 @@ Global
 		{2BAA1C6D-B556-4205-9004-4ABF8195024C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BAA1C6D-B556-4205-9004-4ABF8195024C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BAA1C6D-B556-4205-9004-4ABF8195024C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ECBE3F0-032E-443F-8A1B-EA1F5A00CD84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ECBE3F0-032E-443F-8A1B-EA1F5A00CD84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ECBE3F0-032E-443F-8A1B-EA1F5A00CD84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ECBE3F0-032E-443F-8A1B-EA1F5A00CD84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

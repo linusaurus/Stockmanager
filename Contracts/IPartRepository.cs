@@ -16,6 +16,8 @@ namespace Contracts
 
         Part GetPartBySKU(string sku,bool trackChanges);
 
+        Part? GetDeepPart(int id,bool trackChnages);
+
         IEnumerable<Part> GetPartsByLocation(int locationID, bool trackChanges);
         void UpdatePart(Part part);
 

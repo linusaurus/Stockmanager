@@ -39,6 +39,7 @@ namespace Entities.Models
         public string ModifiedBy { get; set; }
         public string OrderFormat { get; set; }
         public double? TaxRate { get; set; }
+        public string TrackingLabelNum { get; set; }
 
         public virtual Employee Employee { get; set; }
         public virtual Job Job { get; set; }

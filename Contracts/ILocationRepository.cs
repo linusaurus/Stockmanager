@@ -11,10 +11,14 @@ namespace Contracts
     public interface ILocationRepository
     {
         IEnumerable<Location> GetAll(bool trackChanges);
+
+        Location GetLocationById(int id, bool trackChanges);
+
         IEnumerable<Location> Search(string[] searchTerm, bool trackChanges);
 
         IEnumerable<Part> GetPartsbyLocation(int partID, bool trackChanges);
 
         void Update(Location location);
+        
     }
 }

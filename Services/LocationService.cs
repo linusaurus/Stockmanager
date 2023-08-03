@@ -1,11 +1,14 @@
 ﻿using Contracts;
 using Entities.Models;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Service
 {
@@ -37,5 +40,33 @@ namespace Service
         {
             return _repository.LocationRepository.GetAll(false).ToList();
         }
+
+        public IEnumerable<RackLabelDto> GetLocationsList(bool trackChanges)
+        {
+            return _repository.LocationRepository.GetAll(false).Select(r => new RackLabelDto 
+            { 
+                Area = r.Area,
+                Row = r.Row,
+                Aisle = r.Aisle.ToString(),
+                Bcode = r.LocationID.ToString(),
+            }).ToList();
+               
+        }
+
+        public RackLabelDto? GetRackLabel(int locationID, bool trackChanges)
+        {
+            var loc = _repository.LocationRepository.GetLocationById(locationID, trackChanges);
+            RackLabelDto dto = new RackLabelDto
+            {
+                Aisle = loc.Aisle.ToString(),
+                Area = loc.Area,
+                Row = loc.Row,
+                Bcode = loc.LocationID.ToString()
+            };
+            return dto;
+
+        }
+           
+        
     }
 }

@@ -13,6 +13,7 @@
    "Schemas": null,
    "SelectedHandlebarsLanguage": 0,
    "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
    "Tables": [
       {
          "Name": "[dbo].[Asset]",
@@ -167,10 +168,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Task]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[TransActionType]",
          "ObjectType": 0
       },
@@ -212,6 +209,7 @@
    "UseNodaTime": false,
    "UseNullableReferences": false,
    "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
    "UseSpatial": false,
    "UseT4": false
 }

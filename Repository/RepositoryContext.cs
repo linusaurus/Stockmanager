@@ -482,11 +482,19 @@ namespace Repository
 
             modelBuilder.Entity<Location>(entity =>
             {
+                entity.Property(e => e.LocationID).HasMaxLength(50);
+                
                 entity.Property(e => e.Area)
                     .HasMaxLength(10)
                     .IsFixedLength();
 
                 entity.Property(e => e.LocationName)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.Photo).HasDefaultValueSql("(0x)");
+
+                entity.Property(e => e.Row)
                     .HasMaxLength(10)
                     .IsFixedLength();
             });
@@ -649,10 +657,12 @@ namespace Repository
                     .HasMaxLength(120)
                     .HasDefaultValueSql("(' ')");
 
-                entity.Property(e => e.Location)
-                    .HasMaxLength(10)
-                    .HasDefaultValueSql("(' ')")
-                    .IsFixedLength();
+                //entity.Property(e => e.Location)
+                //    .HasMaxLength(10)
+                //    .HasDefaultValueSql("(' ')")
+                //    .IsFixedLength();
+
+                //entity.Property(e => e.LocationID).HasDefaultValueSql("((5))");
 
                 entity.Property(e => e.ManuID).HasDefaultValueSql("((1))");
 
@@ -696,6 +706,11 @@ namespace Repository
                 entity.Property(e => e.Weight)
                     .HasColumnType("decimal(18, 4)")
                     .HasDefaultValueSql("((0.0))");
+
+                entity.HasOne(d => d.Location)
+                    .WithMany(p => p.Part)
+                    .HasForeignKey(d => d.LocationID)
+                    .HasConstraintName("FK_Part_Location");
 
                 entity.HasOne(d => d.UnitOfMeasure)
                     .WithMany(p => p.Part)
@@ -896,6 +911,10 @@ namespace Repository
                     .HasColumnType("money")
                     .HasDefaultValueSql("((0.0))");
 
+                entity.Property(e => e.TrackingLabelNum)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
                 entity.HasOne(d => d.Employee)
                     .WithMany(p => p.PurchaseOrder)
                     .HasForeignKey(d => d.EmployeeID)
@@ -1024,7 +1043,6 @@ namespace Repository
                     .HasDefaultValueSql("(' ')");
             });
 
-          
             modelBuilder.Entity<TransActionType>(entity =>
             {
                 entity.HasKey(e => e.TransactionsTypeID);

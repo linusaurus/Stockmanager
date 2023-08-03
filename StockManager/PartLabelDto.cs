@@ -13,6 +13,7 @@ namespace StockManager
         public string? Location { get; set; }
         public string? SKU { get; set; }
 
-
     }
+
+    
 }

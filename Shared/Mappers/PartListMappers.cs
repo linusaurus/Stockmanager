@@ -14,7 +14,7 @@ namespace Shared.Mappers
         public void Map(Part source, PartSearchList destination)
         {
             destination.PartID = source.PartID;
-            destination.Manufacturer = source.GetManu.Manufacturer;
+            destination.Manufacturer = source.Manu.Manufacturer;
             destination.ManuPartNUm = source.ManuPartNum.ToString();
             destination.ItemDescription = source.ItemDescription;
             destination.AddedBy = source.AddedBy;

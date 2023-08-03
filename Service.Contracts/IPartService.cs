@@ -1,4 +1,5 @@
 ﻿using System;
+using Entities.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,6 @@ namespace Service.Contracts
     public interface IPartService
     {
         IEnumerable<PartSearchList> Search(string[] searchTerm,bool trackChanges);
+        Part FindFullPart (int partId, bool trackChanges);
     }
 }

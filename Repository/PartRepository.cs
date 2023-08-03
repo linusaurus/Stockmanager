@@ -26,12 +26,14 @@ namespace Repository
         public IEnumerable<Part> Search(string[] searchTerm, bool trackChanges)
         {
             IQueryable<Part>  searchParts = new List<Part>().AsQueryable();
+            searchParts.Include(d => d.Location);
+            searchParts.Include(f => f.Manu);
 
             var isSearchOneNullOrEmpty = string.IsNullOrEmpty(searchTerm[0]);
             var isSearchTwoNullOrEmpty = string.IsNullOrEmpty(searchTerm[1]);
             var isSearchThreeNullOrEmpty = string.IsNullOrEmpty(searchTerm[2]);
 
-            searchParts = base.RepositoryContext.Part.Include(m => m.GetManu).Where(a =>
+            searchParts = base.RepositoryContext.Part.Include(m => m.Manu).Where(a =>
             (isSearchOneNullOrEmpty || a.ItemDescription.Contains(searchTerm[0])
             ) &&
             (isSearchTwoNullOrEmpty || a.ItemDescription.Contains(searchTerm[1])
@@ -45,6 +47,8 @@ namespace Repository
         public Part GetPartById(int id, bool trackChanges) =>
             FindByCondition(e => e.PartID == id, trackChanges).Single();
 
+       
+
         public void UpdatePart(Part part)
         {
             Update(part);          
@@ -57,6 +61,16 @@ namespace Repository
 
         public IEnumerable<Part> GetPartsByLocation(int locationID, bool trackChanges) =>
             FindByCondition(e => e.LocationID==locationID, trackChanges).ToList();
-       
+
+        public Part? GetDeepPart(int id, bool trackChnages)
+        {
+            
+            IQueryable<Part> r = FindByCondition(e => e.PartID == id, true);
+            r.Include(m => m.Manu);
+            r.Include(l => l.Location);
+
+
+            return r.FirstOrDefault();
+        }
     }
 }

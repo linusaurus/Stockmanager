@@ -172,10 +172,10 @@ namespace StockManager
             dg.Columns.AddRange(col_ID, col_Description, col_Unit, col_Qnty, col_Price, col_Extended);
         }
 
-        public static void BuildJobOrdersGrid(DataGridView dg)
+        public static void BuildLocationGrid(DataGridView dg)
         {
             dg.AutoGenerateColumns = false;
-
+            dg.AlternatingRowsDefaultCellStyle.BackColor = Color.DarkGray;
             dg.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dg.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
@@ -197,22 +197,22 @@ namespace StockManager
 
             // PartID Column --
             DataGridViewTextBoxColumn col_ID = new DataGridViewTextBoxColumn();
-            col_ID.HeaderText = "ID";
-            col_ID.DataPropertyName = "PurchaseOrderID";
-            col_ID.Width = 55;
+            col_ID.HeaderText = "Area";
+            col_ID.DataPropertyName = "Area";
+            col_ID.Width = 60;
 
             // Receipt Description Column --
             DataGridViewTextBoxColumn col_Description = new DataGridViewTextBoxColumn();
-            col_Description.HeaderText = "Description";
-            col_Description.DataPropertyName = "ItemDescription";
-            col_Description.Width = 120;
-            col_Description.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            col_Description.HeaderText = "Aisle";
+            col_Description.DataPropertyName = "Aisle";
+            col_Description.Width = 60;
+           
 
             // Manufacturer Column --
             DataGridViewTextBoxColumn col_Manufacturer = new DataGridViewTextBoxColumn();
-            col_Manufacturer.HeaderText = "PartNum";
-            col_Manufacturer.DataPropertyName = "PartNumber";
-            col_Manufacturer.Width = 160;
+            col_Manufacturer.HeaderText = "Level";
+            col_Manufacturer.DataPropertyName = "Row";
+            col_Manufacturer.Width = 60;
 
 
 
@@ -1291,33 +1291,7 @@ namespace StockManager
             dg.Columns.AddRange(col_StartTransActionID, col_Location, col_DateStamp, col_InventoryAmount, col_UnitOfMeasure, col_EmployeeName, col_TransActionTypeName);
         }
 
-        public static void BuildLocationsGrid(DataGridView dg)
-        {
-            dg.AutoGenerateColumns = false;
-
-            dg.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            dg.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            dg.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;
-
-  
-
-            // Location Column --
-            DataGridViewTextBoxColumn col_Location = new DataGridViewTextBoxColumn();
-            col_Location.HeaderText = "Location";
-            col_Location.DataPropertyName = "LocationName";
-            col_Location.Width = 75;
-
-  
-            // Area Column --
-            DataGridViewTextBoxColumn col_Area = new DataGridViewTextBoxColumn();
-            col_Area.HeaderText = "Area";
-            col_Area.DataPropertyName = "Area";
-            col_Area.Width = 75;
-            col_Area.AutoSizeMode= DataGridViewAutoSizeColumnMode.Fill;
-
-           
-            dg.Columns.AddRange(col_Location, col_Area);
-        }
+     
 
         public  static void BuildLocationPartsGrid(DataGridView dg)
         {

@@ -14,7 +14,9 @@ namespace Shared.DataTransferObjects
         public int PartID { get; set; }
         public string? ItemDescription { get; set; }
         public string? ManuPartNUm { get; set; }
-        public string? Manufacturer { get; set; }  
+        public string? Manufacturer { get; set; } 
+        public int LocationID { get; set; }
+        public string? Location { get; set; }
         public string? UPC { get; set; }
         public string? DateAdded { get; set; } 
         public string? AddedBy { get; set; } 

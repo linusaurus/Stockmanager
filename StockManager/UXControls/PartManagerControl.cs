@@ -27,7 +27,7 @@ namespace StockManager.UXControls
         IServiceManager _serviceManager;
         IMediator _mediator;
         List<Part> _selectedParts = new List<Part>();
-       // PartSearchList _selectedPart;
+        // PartSearchList _selectedPart;
         Part _selectedPart;
 
         private string _lastScanned;
@@ -45,8 +45,8 @@ namespace StockManager.UXControls
             dgvPartsListing.SelectionChanged += DgvPartsListing_SelectionChanged;
             dgvPartsListing.CellDoubleClick += DgvPartsListing_CellDoubleClick;
 
-           //BarcodeScannerManager.Instance.Open();
-           // BarcodeScannerManager.Instance.DataReceived += OnDataReceived;
+            //BarcodeScannerManager.Instance.Open();
+            // BarcodeScannerManager.Instance.DataReceived += OnDataReceived;
 
 
         }
@@ -155,20 +155,21 @@ namespace StockManager.UXControls
             }
             else { return; }
 
-
         }
 
         private void btnPrintLabels_Click(object sender, EventArgs e)
         {
             if (SelectedPart != null)
             {
-
+                var p = _repositoryManager.PartRepository.GetDeepPart(_selectedPart.PartID, true);
+                var l = _repositoryManager.LocationRepository.GetLocationById(SelectedPart.LocationID.GetValueOrDefault(),false);
+                
                 PartLabelDto partLabelDto = new PartLabelDto
                 {
-                    PartID = SelectedPart.PartID,
-                    ItemDescription = SelectedPart.ItemDescription,
-                    Location = SelectedPart.Location,
-                    SKU = SelectedPart.SKU
+                    PartID = p.PartID,
+                    ItemDescription = p.ItemDescription,
+                    Location = l.LocationName,
+                    SKU = p.SKU
                 };
                 LabelFactory.PrintPartLabel(partLabelDto);
             }
@@ -205,7 +206,19 @@ namespace StockManager.UXControls
         {
             if (_selectedPart != null)
             {
-
+                int partID;
+                int.TryParse(_selectedPart.PartID.ToString(), out partID);
+                PartEditForm frm = new PartEditForm(_repositoryManager, _serviceManager, _mediator, partID);
+                DataGridView dv = (DataGridView)sender;
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    _selectedPart.ItemDescription = frm.Part.ItemDescription;
+                    _selectedPart.ManuPartNum = frm.Part.ManuPartNum;
+                    BindingManagerBase bm = BindingContext[dv.DataSource, dv.DataMember];
+                    ((Part)bm.Current).ItemDescription = frm.Part.ItemDescription;
+                    bm.EndCurrentEdit();
+                    dv.Refresh();
+                }
             }
         }
 
