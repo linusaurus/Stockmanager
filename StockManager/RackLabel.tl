@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ThermalLabel Version="11.0" Width="4" Height="1.5" GapLength="0" MarkLength="0" OffsetLength="0" UnitType="Inch" LabelsPerRow="1" LabelsHorizontalGapLength="0" IsContinuous="False" PrintSpeed="" PrintMirror="False" CutAfterPrinting="False" BatchCut="1">
+<ThermalLabel Version="11.0" Width="4" Height="1.5" GapLength="0.0625" MarkLength="0" OffsetLength="0" UnitType="Inch" LabelsPerRow="1" LabelsHorizontalGapLength="0" IsContinuous="False" PrintSpeed="" PrintMirror="False" CutAfterPrinting="False" BatchCut="1">
   <Items>
     <TextItem X="0.2448" Y="0.1641" PrintAsGraphic="True" Width="1.1406" Height="0.2864" Text="AREA" BorderThickness="0.01" Font="Adobe Gothic Std,18,Point,,,False,90,,CP850" TextAlignment="Center" />
     <TextItem X="1.388" Y="0.1641" PrintAsGraphic="True" Width="1.1406" Height="0.2864" Text="AISLE" BorderThickness="0.01" Font="Adobe Gothic Std,18,Point,,,False,90,,CP850" TextAlignment="Center" />

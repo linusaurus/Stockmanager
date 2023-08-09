@@ -156,7 +156,11 @@ namespace StockManager.UXControls
             else { return; }
 
         }
-
+        /// <summary>
+        /// Print the freaking label ----------->
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnPrintLabels_Click(object sender, EventArgs e)
         {
             if (SelectedPart != null)

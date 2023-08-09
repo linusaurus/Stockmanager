@@ -11,6 +11,7 @@
     <Copyright>Weaselware 2023</Copyright>
     <PackageIcon>inventory (1).png</PackageIcon>
     <AssemblyVersion>1.1.0.2</AssemblyVersion>
+    <StartupObject>StockManager.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -49,6 +50,7 @@
     <PackageReference Include="MotorolaCoreScannerNetStandard" Version="1.1.5" />
     <PackageReference Include="Neodynamic.SDK.ThermalLabel" Version="11.0.22.1021" />
     <PackageReference Include="Neodynamic.SDK.ThermalLabel.WindowsPrinting.NetCore" Version="11.0.22.1021" />
+    <PackageReference Include="SkiaSharp" Version="1.60.0" />
   </ItemGroup>
 
   <ItemGroup>

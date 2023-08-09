@@ -98,6 +98,84 @@ namespace StockManager
             dg.Columns.AddRange(col_ID, col_Description, col_Manufacturer,col_UPC , col_ManufacturerPart, col_DateAdded, col_Addedby);
 
         }
+
+        public static void BuildLocationPartsGrid(DataGridView dg)
+        {
+            dg.AutoGenerateColumns = false;
+
+            dg.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dg.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
+            // Currency Decimal Style
+            DataGridViewCellStyle dstyleCurrency = new DataGridViewCellStyle();
+            dstyleCurrency.Format = "C";
+            dstyleCurrency.NullValue = "";
+            dstyleCurrency.Alignment = DataGridViewContentAlignment.MiddleRight;
+            // Date Style
+            DataGridViewCellStyle dstyleDate = new DataGridViewCellStyle();
+            dstyleCurrency.Format = "d";
+            dstyleCurrency.NullValue = "";
+            dstyleCurrency.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+            // Currency Decimal Style
+            DataGridViewCellStyle dstyleDecimal = new DataGridViewCellStyle();
+            dstyleDecimal.Format = "N2";
+            dstyleDecimal.NullValue = "0.00";
+            dstyleDecimal.Alignment = DataGridViewContentAlignment.MiddleRight;
+            // Wrapping Text Style
+            DataGridViewCellStyle dstyleWrapText = new DataGridViewCellStyle();
+            dstyleWrapText.NullValue = "";
+            dstyleWrapText.Alignment = DataGridViewContentAlignment.TopLeft;
+            dstyleWrapText.WrapMode = DataGridViewTriState.True;
+
+            // PartID Column --
+            DataGridViewTextBoxColumn col_ID = new DataGridViewTextBoxColumn();
+            col_ID.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            col_ID.HeaderText = "ID";
+            col_ID.DataPropertyName = "PartID";
+            col_ID.Width = 55;
+
+            // Receipt Description Column --
+            DataGridViewTextBoxColumn col_Description = new DataGridViewTextBoxColumn();
+            col_Description.HeaderText = "Description";
+            col_Description.DataPropertyName = "ItemDescription";
+            col_Description.Width = 120;
+            col_Description.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            // ManufacturerPartNumber Column --
+            DataGridViewTextBoxColumn col_Manufacturer = new DataGridViewTextBoxColumn();
+            col_Manufacturer.HeaderText = "Manufacturer";
+            col_Manufacturer.DataPropertyName = "Manufacturer";
+            col_Manufacturer.Width = 140;
+
+            // ManufacturerPartNumber Column --
+            DataGridViewTextBoxColumn col_UPC = new DataGridViewTextBoxColumn();
+            col_UPC.HeaderText = "UPC";
+            col_UPC.DataPropertyName = "UPC";
+            col_UPC.Width = 95;
+
+            // ManufacturerPartNumber Column --
+            DataGridViewTextBoxColumn col_ManufacturerPart = new DataGridViewTextBoxColumn();
+            col_ManufacturerPart.HeaderText = "Manu-PartNumber";
+            col_ManufacturerPart.DataPropertyName = "ManuPartNUm";
+            col_ManufacturerPart.Width = 110;
+            // DateAdded Column --
+            DataGridViewTextBoxColumn col_DateAdded = new DataGridViewTextBoxColumn();
+            col_DateAdded.DefaultCellStyle = dstyleDate;
+            col_DateAdded.HeaderText = "Date Added";
+            col_DateAdded.DataPropertyName = "DateAdded";
+            col_DateAdded.Width = 85;
+
+            // Addedby Column --
+            DataGridViewTextBoxColumn col_Addedby = new DataGridViewTextBoxColumn();
+            col_Addedby.HeaderText = "Added by";
+            col_Addedby.DataPropertyName = "AddedBy";
+            col_Addedby.Width = 120;
+
+
+            dg.Columns.AddRange(col_ID, col_Description, col_Manufacturer, col_UPC, col_ManufacturerPart, col_DateAdded, col_Addedby);
+
+        }
         /// <summary>
         /// OrderRecipt Line Items
         /// </summary>
@@ -1293,71 +1371,6 @@ namespace StockManager
 
      
 
-        public  static void BuildLocationPartsGrid(DataGridView dg)
-        {
-            dg.AutoGenerateColumns = false;
-
-            dg.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            dg.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            dg.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;
-
-            // Currency Decimal Style ---------------------------------------
-            DataGridViewCellStyle dstyleDecimal = new DataGridViewCellStyle();
-            dstyleDecimal.Format = "N2";
-            dstyleDecimal.NullValue = "0.00";
-            dstyleDecimal.Alignment = DataGridViewContentAlignment.MiddleRight;
-            //----------------------------------------------------------------
-
-            // PartID Column --
-            DataGridViewTextBoxColumn col_PartID = new DataGridViewTextBoxColumn();
-            col_PartID.HeaderText = "PartID";
-            col_PartID.DataPropertyName = "PartID";
-            col_PartID.Width = 55;
-            
-            //ItemDescription Column
-            DataGridViewTextBoxColumn col_ItemDescription = new DataGridViewTextBoxColumn();
-            col_ItemDescription.HeaderText = "Description";
-            col_ItemDescription.DataPropertyName = "ItemDescription";
-            col_ItemDescription.Width = 65;
-            col_ItemDescription.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
-            //Location Column
-            DataGridViewTextBoxColumn col_Location = new DataGridViewTextBoxColumn();
-            col_Location.HeaderText = "Location";
-            col_Location.DataPropertyName = "Location";
-            col_Location.Width = 60;
-           
-
-            //Manufacturer Column
-            DataGridViewTextBoxColumn col_Manufactuer = new DataGridViewTextBoxColumn();
-            col_Manufactuer.ReadOnly = true;
-            col_Manufactuer.HeaderText = "Source";
-            col_Manufactuer.DataPropertyName = "Manufacturer";
-            col_Manufactuer.Width = 85;
-
-            //ManuPart Column
-            DataGridViewTextBoxColumn col_ManuPart = new DataGridViewTextBoxColumn();
-            col_ManuPart.HeaderText = "Manu-Part";
-            col_ManuPart.DataPropertyName = "Manupart";
-            col_ManuPart.DefaultCellStyle.BackColor = System.Drawing.Color.Cornsilk;
-            col_ManuPart.Width = 95;
-
-            //UnitOfMeasure Column
-            DataGridViewTextBoxColumn col_UnitofMeasure = new DataGridViewTextBoxColumn();
-            col_UnitofMeasure.HeaderText = "Unit";
-            col_UnitofMeasure.DataPropertyName = "UnitOfMeasure";
-            col_UnitofMeasure.Width = 50;
-
-            //Stock on Hand Column
-            DataGridViewTextBoxColumn col_StockLevel = new DataGridViewTextBoxColumn();
-            col_StockLevel.HeaderText = "Stock";
-            col_StockLevel.DataPropertyName = "StockOnHand";
-            col_StockLevel.DefaultCellStyle.BackColor = System.Drawing.Color.Cornsilk;
-            col_StockLevel.DefaultCellStyle.DataSourceNullValue = 0.00;
-            col_StockLevel.Width = 60;
-
-            dg.Columns.AddRange(col_PartID, col_ItemDescription,col_Location ,col_Manufactuer, col_ManuPart, col_UnitofMeasure, col_StockLevel);
-
-        }
+        
     }
 }

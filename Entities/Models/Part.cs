@@ -42,7 +42,7 @@ namespace Entities.Models
         public int? Count { get; set; }
 
         public virtual Manu Manu { get; set; }
-        public virtual Location Location{ get; set; }
+        public Location Location{ get; set; }
         public virtual UnitOfMeasure UnitOfMeasure { get; set; }
         public virtual ICollection<Resource> Resource { get; set; }
 

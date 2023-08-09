@@ -74,13 +74,11 @@ namespace StockManager
                 StringReader xmlSR = new StringReader(xmlData);
                 var ds = new DataSet();
                 ds.ReadXml(xmlSR);
+
                 tLabel.DataSource = ds;
-
-                pj.ThermalLabel = tLabel;
-                
+                pj.ThermalLabel = tLabel;               
                 pj.PrintAsGraphic();
-                //pj.Print();
-
+               
             }
         }
 
@@ -146,9 +144,8 @@ namespace StockManager
                 tLabel.DataSource = ds;
 
                 pj.ThermalLabel = tLabel;
-
                 pj.PrintAsGraphic();
-                pj.Print();
+               
 
             }
         }

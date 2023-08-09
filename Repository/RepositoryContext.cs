@@ -43,7 +43,7 @@ namespace Repository
         public virtual DbSet<OrderReceiptItems> OrderReceiptItems { get; set; }
         public virtual DbSet<OrderReciept> OrderReciept { get; set; }
         public virtual DbSet<OrderState> OrderState { get; set; }
-        public virtual DbSet<Part> Part { get; set; }
+        public virtual DbSet<Part>Part { get; set; }
         public virtual DbSet<PartCategory> PartCategory { get; set; }
         public virtual DbSet<PartTypes> PartTypes { get; set; }
         public virtual DbSet<PickList> PickList { get; set; }

@@ -22,12 +22,23 @@ namespace Service
                 
         }
 
-        public IEnumerable<Part> GetLocationParts(int locationID, bool trackChanges)
+        public IEnumerable<Shared.DataTransferObjects.PartSearchList> GetLocationParts(int locationID, bool trackChanges)
         {
             try
             {
-                var locationParts = _repository.PartRepository.GetPartsByLocation(locationID, false).ToList();
-                return locationParts;
+                return  _repository.PartRepository.GetPartsByLocation(locationID, false).Select(dto => new PartSearchList
+                { 
+                   PartID = dto.PartID,
+                   ItemDescription = dto.ItemDescription,
+                   AddedBy = dto.AddedBy,
+                   LocationID = dto.LocationID.GetValueOrDefault(),
+                   Location = dto.Location.LocationName,               
+                   DateAdded = dto.DateAdded.GetValueOrDefault().ToShortDateString(),
+                   ManuPartNUm = dto.ManuPartNum,
+                   UPC = dto.SKU
+                
+                }).ToList();
+               
             }
             catch (Exception)
             {

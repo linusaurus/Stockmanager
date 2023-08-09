@@ -47,8 +47,6 @@ namespace Repository
         public Part GetPartById(int id, bool trackChanges) =>
             FindByCondition(e => e.PartID == id, trackChanges).Single();
 
-       
-
         public void UpdatePart(Part part)
         {
             Update(part);          
@@ -59,8 +57,15 @@ namespace Repository
             return FindByCondition(e => e.SKU.Contains(sku), trackChanges).FirstOrDefault();
         }
 
-        public IEnumerable<Part> GetPartsByLocation(int locationID, bool trackChanges) =>
-            FindByCondition(e => e.LocationID==locationID, trackChanges).ToList();
+        public IEnumerable<Part> GetPartsByLocation(int locationID, bool trackChanges)
+        {
+            var query = FindByCondition(e => e.LocationID == locationID, trackChanges);
+            query.Include(m => m.Manu).Load();
+            query.Include(l => l.Location).Load();
+           
+            return query.ToList();
+        }
+            
 
         public Part? GetDeepPart(int id, bool trackChnages)
         {
