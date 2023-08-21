@@ -1,12 +1,14 @@
+using Contracts;
 using Microsoft.Extensions.DependencyInjection;
 using Repository;
+
 
 namespace StockManagerTester
 {
    public class Tester
     {
         RepositoryManager _man;
-        public Tester(RepositoryManager man)
+        public Tester(IRepositoryManager man)
         {
             _man = man;
         }
@@ -21,8 +23,9 @@ namespace StockManagerTester
         {
             var services = new ServiceCollection();
             StockManager.Extensions.ServiceExtensions.ConfigureSqlContext(services);
+            StockManager.Extensions.ServiceExtensions.ConfigureRepositoryManager(services);
             
-            
+          
         }
     }
 }

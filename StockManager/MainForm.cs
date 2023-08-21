@@ -206,6 +206,10 @@ namespace StockManager
             {
                 if (e.Data.Length < 10)
                 {
+                    if (e.Data.StartsWith('J'))
+                    {
+
+                    }
                     // remove any no numeric characters ---
                     string s = Regex.Replace(e.Data, "[^0-9.]", "");
                     // return our part number
@@ -253,6 +257,18 @@ namespace StockManager
                         bsItems.Add(lineItem);
                     }
                     dvgStockList.Refresh();
+
+                }else
+                {
+                    Inventory foundJobPart = _repositoryManager.InventoryRepository.GetInventory(testValue,false);
+                    StockItem lineItem = new StockItem();
+                    lineItem.PartID = foundJobPart.PartID.GetValueOrDefault();
+                    lineItem.Description = foundJobPart.Description;
+                    lineItem.Location = foundJobPart.Location;
+                    lineItem.InventoryAmount = 1.0m;
+                    lineItem.DateStamp = DateTime.Now;
+
+                    bsItems.Add(lineItem);
 
                 }
             }

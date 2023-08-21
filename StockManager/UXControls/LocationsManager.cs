@@ -77,12 +77,8 @@ namespace StockManager.UXControls
                             var result = _serviceManager?.LocationService.GetRackLabel(int.Parse(rackLabel.Bcode), false);
                             if (result != null) { LabelFactory.PrintRackLabel(result); }
                         }
-
-                        
-                    }
-                    
+                    }                   
                     break;
-
             }
         }
     }

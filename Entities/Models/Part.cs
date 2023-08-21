@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Entities.Models
 {
@@ -42,6 +43,7 @@ namespace Entities.Models
         public int? Count { get; set; }
 
         public virtual Manu Manu { get; set; }
+
         public Location Location{ get; set; }
         public virtual UnitOfMeasure UnitOfMeasure { get; set; }
         public virtual ICollection<Resource> Resource { get; set; }
