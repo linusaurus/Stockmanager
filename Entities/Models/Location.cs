@@ -9,9 +9,10 @@ namespace Entities.Models
     {
         public Location()
         {
+            Inventory = new HashSet<Inventory>();
             Part = new HashSet<Part>();
         }
-        [System.ComponentModel.DataAnnotations.Key]
+
         public int LocationID { get; set; }
         public string LocationName { get; set; }
         public string Area { get; set; }
@@ -19,6 +20,7 @@ namespace Entities.Models
         public int? Aisle { get; set; }
         public string Row { get; set; }
 
+        public virtual ICollection<Inventory> Inventory { get; set; }
         public virtual ICollection<Part> Part { get; set; }
     }
 }

@@ -18,5 +18,7 @@ namespace Entities.Models
         public int? CPD_id { get; set; }
         public int? GlassPartID { get; set; }
         public int? OpCode { get; set; }
+
+        public virtual Product Product { get; set; }
     }
 }

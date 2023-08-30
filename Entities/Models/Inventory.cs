@@ -23,8 +23,13 @@ namespace Entities.Models
         public int? EmpID { get; set; }
         public decimal? QntyReceived { get; set; }
         public decimal? InventoryAmount { get; set; }
+        public int? LocationID { get; set; }
+        public int? TransactionReferenceType { get; set; }
+        public string TransactionReference { get; set; }
 
         public virtual Employee Emp { get; set; }
+        public virtual Location LocationNavigation { get; set; }
         public virtual TransActionType TransActionTypeNavigation { get; set; }
+        public virtual UnitOfMeasure UnitOfMeasure { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace Entities.Models
         public PickList()
         {
             Delivery = new HashSet<Delivery>();
+            PickListItem = new HashSet<PickListItem>();
         }
 
         public int PickListID { get; set; }
@@ -23,6 +24,9 @@ namespace Entities.Models
         public int? DestinationID { get; set; }
 
         public virtual Destination Destination { get; set; }
+        public virtual Employee Employee { get; set; }
+        public virtual Job Job { get; set; }
         public virtual ICollection<Delivery> Delivery { get; set; }
+        public virtual ICollection<PickListItem> PickListItem { get; set; }
     }
 }

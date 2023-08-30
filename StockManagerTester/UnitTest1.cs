@@ -5,13 +5,20 @@ using Repository;
 
 namespace StockManagerTester
 {
-   public class Tester
+    
+    public class Tester
     {
-        RepositoryManager _man;
-        public Tester(IRepositoryManager man)
+        private readonly IRepositoryManager _repositoryManager;
+     
+        public Tester(IRepositoryManager man, IRepositoryManager repositoryManager)
         {
-            _man = man;
+
+            _repositoryManager = repositoryManager;
+            var result = _repositoryManager.InventoryRepository.GetPartTransactions(1, false);
+
         }
+
+        
 
     }
     

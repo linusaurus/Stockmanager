@@ -26,7 +26,7 @@ namespace Repository
         public IEnumerable<Part> Search(string[] searchTerm, bool trackChanges)
         {
             IQueryable<Part>  searchParts = new List<Part>().AsQueryable();
-            searchParts.Include(d => d.Location);
+            searchParts.Include(d => d.LocationNavigation);
             searchParts.Include(f => f.Manu);
 
             var isSearchOneNullOrEmpty = string.IsNullOrEmpty(searchTerm[0]);
@@ -61,7 +61,7 @@ namespace Repository
         {
             var query = FindByCondition(e => e.LocationID == locationID, trackChanges);
             query.Include(m => m.Manu).Load();
-            query.Include(l => l.Location).Load();
+            query.Include(l => l.LocationNavigation).Load();
            
             return query.ToList();
         }
@@ -71,8 +71,8 @@ namespace Repository
         {
             
             IQueryable<Part> r = FindByCondition(e => e.PartID == id, true);
-            r.Include(m => m.Manu);
-            r.Include(l => l.Location);
+            r.Include(m => m.Manu).Load();
+            r.Include(l => l.LocationNavigation).Load();
 
 
             return r.FirstOrDefault();

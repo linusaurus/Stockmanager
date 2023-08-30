@@ -27,6 +27,8 @@ namespace Entities.Models
         public decimal? Weight { get; set; }
         public string BCode { get; set; }
         public bool? Pushed { get; set; }
+        public DateTime? ExpectedDate { get; set; }
+        public DateTime? RecievedDate { get; set; }
 
         public virtual PurchaseOrder PurchaseOrder { get; set; }
         public virtual UnitOfMeasure UnitOfMeasure { get; set; }

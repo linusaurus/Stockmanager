@@ -26,5 +26,6 @@ namespace Entities.Models
         public bool? Pushed { get; set; }
 
         public virtual OrderReciept OrderReceipt { get; set; }
+        public virtual UnitOfMeasure UnitOfMeasure { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Service
         {
             IQueryable<Part> searchParts = new List<Part>().AsQueryable();
             searchParts.Include(m => m.Manu);
-            searchParts.Include(l => l.Location);
+            searchParts.Include(l => l.LocationNavigation);
             searchParts.Where(r => r.PartID == 1);
             var d  = searchParts.ToList();
 

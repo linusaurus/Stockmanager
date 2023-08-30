@@ -197,6 +197,21 @@ namespace StockManager
         private void OnDataReceived(object? sender, BarcodeScanEventArgs e)
         {
             _mediator.Send(new Ping());
+            /*
+             Filter scan for purpose---> 
+            */
+            switch (e.Data.ElementAt(0))
+            {
+                case 'P':
+                    //Look up Internal Part Num
+                    break;
+                case 'J':
+                    //Look Up Job Part-StockTag Detected
+                    break;
+
+                default:
+                    break;
+            }
 
             _lastScanned = e.Data;
             Invoke(new Action(() => DisplayBarcodeType(e.BarcodeType.ToString())));
@@ -213,7 +228,7 @@ namespace StockManager
                     // remove any no numeric characters ---
                     string s = Regex.Replace(e.Data, "[^0-9.]", "");
                     // return our part number
-                    Invoke(new Action(() => LookupPartScanned(s)));
+                  
                 }
 
 
@@ -221,10 +236,10 @@ namespace StockManager
             // any other type of code assume its a SKU
             // else if (e.BarcodeType == BarcodeType.UPCA || e.BarcodeType == BarcodeType.EAN13 || e.BarcodeType == BarcodeType.Code128)
             // any kind of symbiology other than CODE 39
-            if (e.Data.Length > 1)
-            {
-                Invoke(new Action(() => LookupPartSKU(e.Data.ToString())));
-            }
+            //if (e.Data.Length > 1)
+            //{
+            //    Invoke(new Action(() => LookupPartSKU(e.Data.ToString())));
+            //}
 
         }
 
@@ -235,7 +250,8 @@ namespace StockManager
             int testValue;
             if (int.TryParse(partID, out testValue))
             {
-                var foundPart = _repositoryManager.PartRepository.GetPartById(testValue, true);
+               //var foundPart = _repositoryManager.PartRepository.GetPartById(testValue, true);
+                var foundPart = _repositoryManager.PartRepository.GetDeepPart(testValue, true);
                 if (foundPart != null)
                 {
 
@@ -250,7 +266,7 @@ namespace StockManager
                         lineItem.PartID = foundPart.PartID;
                         lineItem.SKU = foundPart.SKU;
                         lineItem.Description = foundPart.ItemDescription;
-                        //lineItem.Location = foundPart.LocationNavigation.LocationName;
+                        lineItem.Location = foundPart.LocationNavigation.LocationName;
                         lineItem.InventoryAmount = 1.0m;
                         lineItem.DateStamp = DateTime.Now;
 

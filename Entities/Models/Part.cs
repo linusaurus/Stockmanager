@@ -2,7 +2,6 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Entities.Models
 {
@@ -12,7 +11,6 @@ namespace Entities.Models
         {
             Resource = new HashSet<Resource>();
             Doc = new HashSet<Document>();
-            Location = new Location();
         }
 
         public int PartID { get; set; }
@@ -24,7 +22,7 @@ namespace Entities.Models
         public int? PartTypeID { get; set; }
         public decimal? Cost { get; set; }
         public int? UnitOfMeasureID { get; set; }
-      
+  
         public decimal? Weight { get; set; }
         public decimal? Waste { get; set; }
         public decimal? MarkUp { get; set; }
@@ -42,9 +40,8 @@ namespace Entities.Models
         public int? LocationID { get; set; }
         public int? Count { get; set; }
 
+        public  Location LocationNavigation { get; set; }
         public virtual Manu Manu { get; set; }
-
-        public Location Location{ get; set; }
         public virtual UnitOfMeasure UnitOfMeasure { get; set; }
         public virtual ICollection<Resource> Resource { get; set; }
 

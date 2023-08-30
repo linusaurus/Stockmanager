@@ -17,5 +17,7 @@ namespace Entities.Models
         public bool? Onboard { get; set; }
         public bool? Delivered { get; set; }
         public int? StockTransActionID { get; set; }
+
+        public virtual PickList PickList { get; set; }
     }
 }

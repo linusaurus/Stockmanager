@@ -14,6 +14,7 @@ namespace Entities.Models
         public int? PickListID { get; set; }
         public DateTime? TimeStamp { get; set; }
 
+        public virtual Job Job { get; set; }
         public virtual PickList PickList { get; set; }
     }
 }

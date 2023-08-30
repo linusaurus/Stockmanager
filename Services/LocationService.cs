@@ -32,7 +32,7 @@ namespace Service
                    ItemDescription = dto.ItemDescription,
                    AddedBy = dto.AddedBy,
                    LocationID = dto.LocationID.GetValueOrDefault(),
-                   Location = dto.Location.LocationName,               
+                   Location = dto.LocationNavigation.LocationName,               
                    DateAdded = dto.DateAdded.GetValueOrDefault().ToShortDateString(),
                    ManuPartNUm = dto.ManuPartNum,
                    UPC = dto.SKU

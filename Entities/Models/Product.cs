@@ -7,6 +7,11 @@ namespace Entities.Models
 {
     public partial class Product
     {
+        public Product()
+        {
+            SubAssembly = new HashSet<SubAssembly>();
+        }
+
         public int ProductID { get; set; }
         public int? JobID { get; set; }
         public int? UnitID { get; set; }
@@ -23,5 +28,6 @@ namespace Entities.Models
         public bool? NIC { get; set; }
 
         public virtual Job Job { get; set; }
+        public virtual ICollection<SubAssembly> SubAssembly { get; set; }
     }
 }

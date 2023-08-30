@@ -11,6 +11,7 @@ namespace Entities.Models
         {
             Inventory = new HashSet<Inventory>();
             OrderReciept = new HashSet<OrderReciept>();
+            PickList = new HashSet<PickList>();
             PurchaseOrder = new HashSet<PurchaseOrder>();
         }
 
@@ -27,6 +28,7 @@ namespace Entities.Models
 
         public virtual ICollection<Inventory> Inventory { get; set; }
         public virtual ICollection<OrderReciept> OrderReciept { get; set; }
+        public virtual ICollection<PickList> PickList { get; set; }
         public virtual ICollection<PurchaseOrder> PurchaseOrder { get; set; }
     }
 }

@@ -9,6 +9,8 @@ namespace Entities.Models
     {
         public Job()
         {
+            Delivery = new HashSet<Delivery>();
+            PickList = new HashSet<PickList>();
             Product = new HashSet<Product>();
             PurchaseOrder = new HashSet<PurchaseOrder>();
         }
@@ -28,6 +30,8 @@ namespace Entities.Models
         public bool? Visible { get; set; }
         public DateTime? start_ts { get; set; }
 
+        public virtual ICollection<Delivery> Delivery { get; set; }
+        public virtual ICollection<PickList> PickList { get; set; }
         public virtual ICollection<Product> Product { get; set; }
         public virtual ICollection<PurchaseOrder> PurchaseOrder { get; set; }
     }

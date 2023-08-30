@@ -9,6 +9,8 @@ namespace Entities.Models
     {
         public UnitOfMeasure()
         {
+            Inventory = new HashSet<Inventory>();
+            OrderReceiptItems = new HashSet<OrderReceiptItems>();
             Part = new HashSet<Part>();
             PurchaseLineItem = new HashSet<PurchaseLineItem>();
         }
@@ -16,6 +18,8 @@ namespace Entities.Models
         public int UnitOfMeasureID { get; set; }
         public string UnitName { get; set; }
 
+        public virtual ICollection<Inventory> Inventory { get; set; }
+        public virtual ICollection<OrderReceiptItems> OrderReceiptItems { get; set; }
         public virtual ICollection<Part> Part { get; set; }
         public virtual ICollection<PurchaseLineItem> PurchaseLineItem { get; set; }
     }

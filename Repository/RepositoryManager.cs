@@ -12,30 +12,30 @@ namespace Repository
     {
         // Here the bones for all the repositories
         private readonly RepositoryContext _repositoryContext;
-        private readonly Lazy<IPartRepository> _partRepository;
-        private readonly Lazy<IInventoryRepository> _inventoryRepository;
-        private readonly Lazy<IJobsRepository> _jobsRepository;
-        private readonly Lazy<ILocationRepository> _locationRepository;
-        private readonly Lazy<IUnitOfMeasureRepository> _unitOfMeasureRepository;
+        private readonly IPartRepository _partRepository;
+        private readonly IInventoryRepository _inventoryRepository;
+        private readonly IJobsRepository _jobsRepository;
+        private readonly ILocationRepository _locationRepository;
+        private readonly IUnitOfMeasureRepository _unitOfMeasureRepository;
      
         //-----------------------------------------------------
 
         public RepositoryManager(RepositoryContext repositoryContext)
         {
             _repositoryContext = repositoryContext;
-            _partRepository = new Lazy<IPartRepository>(() => new PartRepository(repositoryContext));  
-            _inventoryRepository = new Lazy<IInventoryRepository>(() => new InventoryRepository(repositoryContext));
-            _jobsRepository = new Lazy<IJobsRepository>(() => new JobRepository(repositoryContext));
-            _locationRepository = new Lazy<ILocationRepository>(() => new LocationRepository(repositoryContext));
-            _unitOfMeasureRepository = new Lazy<IUnitOfMeasureRepository>(() => new UnitOfMeasureRepository(repositoryContext));
+            _partRepository  = new PartRepository(repositoryContext);  
+            _inventoryRepository = new InventoryRepository(repositoryContext);
+            _jobsRepository =  new JobRepository(repositoryContext);
+            _locationRepository =  new LocationRepository(repositoryContext);
+            _unitOfMeasureRepository =  new UnitOfMeasureRepository(repositoryContext);
         }
 
-        public IPartRepository PartRepository => _partRepository.Value;
-        public IInventoryRepository InventoryRepository => _inventoryRepository.Value;
-        public IJobsRepository JobsRepository => _jobsRepository.Value;
-        public ILocationRepository LocationRepository => _locationRepository.Value;
+        public IPartRepository PartRepository => _partRepository;
+        public IInventoryRepository InventoryRepository => _inventoryRepository;
+        public IJobsRepository JobsRepository => _jobsRepository;
+        public ILocationRepository LocationRepository => _locationRepository;
 
-        public IUnitOfMeasureRepository UnitOfMeasureRepository => _unitOfMeasureRepository.Value;
+        public IUnitOfMeasureRepository UnitOfMeasureRepository => _unitOfMeasureRepository;
 
         // The save
         public void Save() => _repositoryContext.SaveChanges();
