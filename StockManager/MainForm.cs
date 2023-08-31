@@ -197,21 +197,7 @@ namespace StockManager
         private void OnDataReceived(object? sender, BarcodeScanEventArgs e)
         {
             _mediator.Send(new Ping());
-            /*
-             Filter scan for purpose---> 
-            */
-            switch (e.Data.ElementAt(0))
-            {
-                case 'P':
-                    //Look up Internal Part Num
-                    break;
-                case 'J':
-                    //Look Up Job Part-StockTag Detected
-                    break;
 
-                default:
-                    break;
-            }
 
             _lastScanned = e.Data;
             Invoke(new Action(() => DisplayBarcodeType(e.BarcodeType.ToString())));
@@ -221,25 +207,44 @@ namespace StockManager
             {
                 if (e.Data.Length < 10)
                 {
-                    if (e.Data.StartsWith('J'))
+                    /*
+                     Filter scan for purpose---> 
+                    */
+                    string val;
+                    switch (e.Data.ElementAt(0))
                     {
-
+                        case 'P':
+                            //Look up Internal Part Num
+                            val = Regex.Replace(e.Data, "[^0-9.]", "");
+                            Invoke(new Action(() => LookupPartScanned(val)));
+                            break;
+                        case 'J':
+                            //Look Up Job Part-StockTag Detected
+                            // Find the StockTransaction from the LineID or StockTransactionID
+                            // Insert a transaction
+                            break;
+                        case 'A':
+                            //Lookup Asset tag ID                                                                                                                                          
+                            break;
+                        default:
+                            break;
                     }
                     // remove any no numeric characters ---
-                    string s = Regex.Replace(e.Data, "[^0-9.]", "");
+                    // string s = Regex.Replace(e.Data, "[^0-9.]", "");
                     // return our part number
-                  
-                }
 
+                }
+                // any other type of code assume its a SKU
+                else if (e.BarcodeType == BarcodeType.UPCA || e.BarcodeType == BarcodeType.EAN13 || e.BarcodeType == BarcodeType.Code128 || e.BarcodeType == BarcodeType.Code39)
+
+                    if (e.Data.Length > 1)
+                    {
+                        Invoke(new Action(() => LookupPartSKU(e.Data.ToString())));
+                    }
 
             }
-            // any other type of code assume its a SKU
-            // else if (e.BarcodeType == BarcodeType.UPCA || e.BarcodeType == BarcodeType.EAN13 || e.BarcodeType == BarcodeType.Code128)
-            // any kind of symbiology other than CODE 39
-            //if (e.Data.Length > 1)
-            //{
-            //    Invoke(new Action(() => LookupPartSKU(e.Data.ToString())));
-            //}
+            
+        
 
         }
 
@@ -277,6 +282,54 @@ namespace StockManager
                 }else
                 {
                     Inventory foundJobPart = _repositoryManager.InventoryRepository.GetInventory(testValue,false);
+                    StockItem lineItem = new StockItem();
+                    lineItem.PartID = foundJobPart.PartID.GetValueOrDefault();
+                    lineItem.Description = foundJobPart.Description;
+                    lineItem.Location = foundJobPart.Location;
+                    lineItem.InventoryAmount = 1.0m;
+                    lineItem.DateStamp = DateTime.Now;
+
+                    bsItems.Add(lineItem);
+
+                }
+            }
+
+        }
+
+
+        private void LookupJobPartScanned(string stockTagID)
+        {
+            int testValue;
+            if (int.TryParse(stockTagID, out testValue))
+            {
+                //var foundPart = _repositoryManager.PartRepository.GetPartById(testValue, true);
+                var foundJobPart = _repositoryManager.InventoryRepository.GetInventory(testValue,false);
+                if (foundJobPart != null)
+                {
+
+                    if (bsItems.List.Contains(new StockItem { PartID = 0 }))
+                    {
+                        int index = bsItems.IndexOf(new StockItem { LineID = foundJobPart.LineID.GetValueOrDefault() });
+                        ((StockItem)bsItems[index]).InventoryAmount++;
+                    }
+                    else
+                    {
+                        StockItem lineItem = new StockItem();
+                        lineItem.PartID  = 0;
+                        lineItem.SKU = "NA";
+                        lineItem.Description = foundJobPart.Description;
+                        lineItem.Location = foundJobPart.LocationNavigation.LocationName;
+                        lineItem.InventoryAmount = 1.0m;
+                        lineItem.DateStamp = DateTime.Now;
+
+                        bsItems.Add(lineItem);
+                    }
+                    dvgStockList.Refresh();
+
+                }
+                else
+                {
+                    Inventory foundJobPart = _repositoryManager.InventoryRepository.GetInventory(testValue, false);
                     StockItem lineItem = new StockItem();
                     lineItem.PartID = foundJobPart.PartID.GetValueOrDefault();
                     lineItem.Description = foundJobPart.Description;
